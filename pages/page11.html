@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>වෘන්ත සහ පත්‍ර සටහන</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* ලබා දී ඇති සංඛ්‍යා බොත්තම් (Numbers grid) */
+        .number-pool {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            background-color: #eef2f7;
+            padding: 6px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .num-btn {
+            background-color: #ffffff;
+            border: 1px solid #007bff;
+            color: #007bff;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 3px 6px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .num-btn:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .num-btn.clicked {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: #fff;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Stem and Leaf Table Style */
+        .stem-leaf-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        .stem-table {
+            border-collapse: collapse;
+            font-size: 14px;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stem-table th {
+            border-bottom: 2px solid #dc3545;
+            padding: 2px 12px;
+            background-color: #f8f9fa;
+        }
+
+        .stem-table td.stem {
+            border-right: 2px solid #dc3545;
+            font-weight: bold;
+            text-align: center;
+            padding: 2px 12px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .stem-table td.leaf {
+            padding: 2px 12px;
+            letter-spacing: 5px;
+            font-family: monospace;
+            font-size: 14px;
+            color: #007bff;
+            min-width: 150px;
+        }
+
+        /* Question Section */
+        .quiz-container {
+            font-size: 16px;
+        }
+
+        .question-item {
+            background-color: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 4px 8px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .quiz-input {
+            width: 45px;
+            text-align: center;
+            padding: 2px;
+            font-size: 16px;
+            border: 1px solid #aaa;
+            border-radius: 3px;
+        }
+
+        .correct { background-color: #d4edda !important; border-color: #28a745 !important; }
+        .incorrect { background-color: #f8d7da !important; border-color: #dc3545 !important; }
+
+        .mark-span {
+            font-weight: bold;
+            margin-left: 4px;
+            width: 12px;
+            display: inline-block;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 6px;
+			font-size:14px
+        }
+    </style>
+</head>
+<body>
+
+  <div class="page">
+    <div>
+        <!-- Header -->
+        <div class="header">
+            <h1 class="title"> වෘන්ත  පත්‍ර සටහන</h1>
+        </div>
+
+        <p style="font-size: 14px; margin-bottom: 4px;">
+            <b>උපදෙස්:</b> පහත සංඛ්‍යා මත ක්ලික් කර වෘන්ත-පත්‍ර සටහන සම්පූර්ණ කරන්න.
+        </p>
+
+        <!-- සංඛ්‍යා ලැයිස්තුව (Clickable Buttons) -->
+        <div class="number-pool" id="numberPool">
+            <!-- JavaScript මඟින් බොත්තම් එකතු වේ -->
+        </div>
+
+        <!-- Stem & Leaf Table -->
+        <div class="stem-leaf-container">
+            <table class="stem-table">
+                <thead>
+                    <tr>
+                        <th>වෘන්තය</th>
+                        <th>පත්‍ර</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="stem">0</td><td class="leaf" id="leaf-0"></td></tr>
+                    <tr><td class="stem">1</td><td class="leaf" id="leaf-1"></td></tr>
+                    <tr><td class="stem">2</td><td class="leaf" id="leaf-2"></td></tr>
+                    <tr><td class="stem">3</td><td class="leaf" id="leaf-3"></td></tr>
+                    <tr><td class="stem">4</td><td class="leaf" id="leaf-4"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ප්‍රශ්න අංශය -->
+        <div class="quiz-container">
+            <div class="question-item">
+                <span>1. 25 ට අඩු සංඛ්‍යා ගණන කීයද?</span>
+                <div>
+                    <input type="text" id="q1" class="quiz-input">
+                    <span id="cw1" class="mark-span"></span>
+                </div>
+            </div>
+            <div class="question-item">
+                <span>2. 35 ට වැඩි සංඛ්‍යා ගණන කීයද?</span>
+                <div>
+                    <input type="text" id="q2" class="quiz-input">
+                    <span id="cw2" class="mark-span"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons & Score -->
+        <div class="btn-group">
+            <button class="nav-btn" onclick="checkAnswers()">පරීක්ෂා කරන්න</button>
+            <button class="nav-btn" style="background-color: #dc3545;" onclick="resetAll()">නැවත කරන්න</button>
+            
+        </div>
+		<div id="scoreDisplay" style="font-size: 13px; font-weight: bold;"></div>
+    </div>
+
+    <!-- Footer -->
+    
+  </div>
+
+  <script>
+    const numbers = [5, 7, 9, 11, 13, 16, 19, 20, 21, 22, 24, 25, 26, 26, 29, 31, 33, 35, 36, 38, 40, 43, 45, 48, 49];
+
+    // සංඛ්‍යා බොත්තම් සෑදීම
+    function initButtons() {
+        const pool = document.getElementById('numberPool');
+        pool.innerHTML = '';
+        numbers.forEach((num, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'num-btn';
+            btn.textContent = num;
+            btn.onclick = () => addLeaf(num, btn);
+            pool.appendChild(btn);
+        });
+    }
+
+    // සංඛ්‍යාවක් ක්ලික් කළ විට වගුවට පත්‍රය එකතු කිරීම
+    // එක් එක් වෘන්තයට අදාළ පත්‍ර එකතු වන Array එකක් තබා ගැනීම
+const leavesData = { 0: [], 1: [], 2: [], 3: [], 4: [] };
+
+// සංඛ්‍යාවක් ක්ලික් කළ විට වගුවට පත්‍රය පිළිවෙළට (Sorted) එකතු කිරීම
+function addLeaf(num, btn) {
+    if (btn.classList.contains('clicked')) return;
+
+    btn.classList.add('clicked');
+    
+    const stem = Math.floor(num / 10); // දසස් ස්ථානය (Stem)
+    const leaf = num % 10;             // ඒකස් ස්ථානය (Leaf)
+    
+    // 1. පත්‍රය අදාළ Array එකට එකතු කිරීම
+    leavesData[stem].push(leaf);
+    
+    // 2. පත්‍ර ආරෝහණ පිළිවෙළට සකස් කිරීම (Sort Ascending)
+    leavesData[stem].sort((a, b) => a - b);
+    
+    // 3. පිළිවෙළ වූ පත්‍ර ටික වගුවේ පෙන්වීම (Space තබා එකතු කිරීම)
+    const leafTd = document.getElementById('leaf-' + stem);
+    leafTd.textContent = leavesData[stem].join(' ');
+}
+
+// නැවත මුල සිට කරන විට Array හිස් කිරීම
+function resetAll() {
+    initButtons();
+    for (let i = 0; i <= 4; i++) {
+        leavesData[i] = []; // Array එක හිස් කිරීම
+        document.getElementById('leaf-' + i).textContent = '';
+    }
+    for (let i = 1; i <= 2; i++) {
+        const input = document.getElementById('q' + i);
+        input.value = '';
+        input.className = 'quiz-input';
+        document.getElementById('cw' + i).textContent = '';
+    }
+    document.getElementById('scoreDisplay').textContent = '';
+}
+
+function checkAnswers() {
+        // 25ට වැඩි: (26, 26, 29, 31, 33, 35, 36, 38, 40, 43, 45, 48, 49) = 13
+        // 35ට වැඩි: (36, 38, 40, 43, 45, 48, 49) = 7
+        const correctAnswers = { q1: "11", q2: "7" };
+        let correctCount = 0;
+
+        for (let i = 1; i <= 2; i++) {
+            const qId = 'q' + i;
+            const cwId = 'cw' + i;
+            const input = document.getElementById(qId);
+            const span = document.getElementById(cwId);
+
+            if (input.value.trim() === correctAnswers[qId]) {
+                input.className = "quiz-input correct";
+                span.textContent = "✓";
+                span.style.color = "#28a745";
+                correctCount++;
+            } else {
+                input.className = "quiz-input incorrect";
+                span.textContent = "✗";
+                span.style.color = "#dc3545";
+            }
+        }
+
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const percentage = Math.round((correctCount / 2) * 100);
+        scoreDisplay.textContent = "ලකුණු: " + percentage + "%";
+        scoreDisplay.style.color = percentage === 100 ? "#28a745" : "#dc3545";
+    }
+
+
+
+
+
+
+    // පිටුව ආරම්භයේදී ක්‍රියාත්මක වීම
+    initButtons();
+  </script>
+</body>
+</html>

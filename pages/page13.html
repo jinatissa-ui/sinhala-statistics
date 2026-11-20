@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<link type ='text/css' rel= 'stylesheet' href='../css/style.css'>
+<script src='../js/myjs.js'></script>  
+<title>UJ NEW HTML EDITOR</title>     
+<style type="text/css">
+
+/* දෙවන පිටුව සඳහා විශේෂිත පොඩි CSS කිහිපයක් */
+        .btn-container {
+            text-align: center;
+            margin: 12px 0;
+        }
+        .example-box {
+            background-color: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 10px;
+            min-height: 85px;
+        }
+        .mode-result {
+            color: #2e7d32;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+</style>
+</head>
+<body >   
+          
+<div class="page">
+        <div>
+            <!-- Header -->
+            <div class="header">
+                <h1 class="title">මාතය -  අභ්‍යාස</h1>
+            </div>
+<br><br>
+            <p style="margin-bottom: 5px;">
+                පහත දැක්වෙන දත්ත සමූහයේ <b>මාතය</b> සොයා හිස්තැනෙහි ලියා පරීක්ෂා කරන්න.
+            </p>
+
+            <!-- Quiz Container -->
+            <div id="quizContainer" class="quiz-card"><br>
+                <div class="question-number" id="qNumber">ප්‍රශ්නය 1 / 10</div><br>
+                <div style="font-size: 16px;">දත්ත සමූහය:</div>
+                <div class="data-display" id="dataDisplay"></div>
+<br><br>
+                <div style="margin-top: 10px;">
+                    <label for="userAnswer" style="font-size: 16px;"><b>මාතය = </b></label>
+                    <input type="number" id="userAnswer" class="input-box" placeholder="අගය" onkeypress="handleKeyPress(event)">
+                </div>
+<br><br>
+                <div style="margin-top: 12px;">
+                    <button class="nav-btn" id="checkBtn" onclick="checkAnswer()">පිළිතුර බලන්න ✔</button>
+                    <button class="nav-btn" id="nextBtn" onclick="nextQuestion()" style="display: none; background-color: #28a745;">ඊළඟ ප්‍රශ්නය ➔</button>
+                </div>
+<br>
+                <div class="result-msg" id="resultMsg" style="color:red"></div>
+            </div>
+
+            <!-- Score View (Hidden initially) -->
+			<br>
+            <div id="scoreContainer" class="score-board" style="display: none;">
+                <h2 style="color: #1b5e20; font-size: 18px;">අභ්‍යාසය අවසන්! 🎉</h2>
+                <p style="font-size: 16px; margin-top: 5px;">ඔබ ලබාගත් සමස්ත ලකුණු ප්‍රමාණය:</p>
+                <div class="score-num" id="finalScore" style="color:red">0%</div>
+                <p id="scoreComment" style="font-size: 16px; font-weight: bold; color: #333;"></p>
+                <button class="nav-btn" onclick="restartQuiz()" style="margin-top: 15px; background-color: #17a2b8;">නැවත කරන්න 🔄</button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        
+    </div>
+
+    <!-- JavaScript logic -->
+    <script>
+        // ප්‍රශ්න 10
+        const questions = [
+            { data: "2, 5, 3, 5, 8, 5, 1", answer: 5 },
+            { data: "12, 10, 15, 12, 18, 12", answer: 12 },
+            { data: "7, 4, 9, 7, 3, 7, 5", answer: 7 },
+            { data: "20, 25, 20, 30, 20, 35", answer: 20 },
+            { data: "1, 6, 8, 6, 9, 6, 4", answer: 6 },
+            { data: "44, 50, 44, 60, 44, 70", answer: 44 },
+            { data: "15, 18, 15, 22, 15, 30", answer: 15 },
+            { data: "3, 8, 3, 9, 3, 11, 4", answer: 3 },
+            { data: "90, 80, 90, 70, 90, 60", answer: 90 },
+            { data: "11, 14, 11, 19, 11, 25", answer: 11 }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            document.getElementById("qNumber").innerText = `ප්‍රශ්නය ${currentQ + 1} / ${questions.length}`;
+            document.getElementById("dataDisplay").innerText = questions[currentQ].data;
+            document.getElementById("userAnswer").value = "";
+            document.getElementById("userAnswer").disabled = false;
+            document.getElementById("resultMsg").innerHTML = "";
+            document.getElementById("checkBtn").style.display = "inline-block";
+            document.getElementById("nextBtn").style.display = "none";
+            document.getElementById("userAnswer").focus();
+        }
+
+        function checkAnswer() {
+            const userAns = parseInt(document.getElementById("userAnswer").value);
+            const correctAns = questions[currentQ].answer;
+            const resultDiv = document.getElementById("resultMsg");
+
+            if (isNaN(userAns)) {
+                resultDiv.innerHTML = "<span style='color: #ff9800;'>කරුණාකර පිළිතුරක් ඇතුළත් කරන්න!</span>";
+                return;
+            }
+
+            document.getElementById("userAnswer").disabled = true;
+            document.getElementById("checkBtn").style.display = "none";
+            document.getElementById("nextBtn").style.display = "inline-block";
+
+            if (userAns === correctAns) {
+                score++;
+                resultDiv.innerHTML = "<span class='correct'>✔ නිවැරදියි! ඉතා හොඳයි.</span>";
+            } else {
+                resultDiv.innerHTML = `<span class='wrong'>✖ වැරදියි!</span><br><span style='font-size:12px; color:#555;'>නිවැරදි පිළිතුර: <b>${correctAns}</b></span>`;
+            }
+        }
+
+        function nextQuestion() {
+            currentQ++;
+            if (currentQ < questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById("quizContainer").style.display = "none";
+            const scoreContainer = document.getElementById("scoreContainer");
+            scoreContainer.style.display = "block";
+
+            const percentage = (score / questions.length) * 100;
+            document.getElementById("finalScore").innerText = `${percentage}%`;
+
+            let comment = "";
+            if (percentage === 100) comment = "ඉතා විශිෂ්ටයි! ඔබ සියල්ල නිවැරදිව කළා. 🌟";
+            else if (percentage >= 70) comment = "ඉතා හොඳයි! හොඳින් තේරුම් ගෙන ඇත. 👍";
+            else if (percentage >= 50) comment = "හොඳයි, තව ටිකක් පුහුණු වෙමු! 🙂";
+            else comment = "නැවතත් පාඩම කියවා උත්සාහ කරන්න. 💪";
+
+            document.getElementById("scoreComment").innerText = comment;
+        }
+
+        function restartQuiz() {
+            currentQ = 0;
+            score = 0;
+            document.getElementById("quizContainer").style.display = "block";
+            document.getElementById("scoreContainer").style.display = "none";
+            loadQuestion();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                if (document.getElementById("checkBtn").style.display !== "none") {
+                    checkAnswer();
+                } else {
+                    nextQuestion();
+                }
+            }
+        }
+
+        // ආරම්භයේදී පළමු ප්‍රශ්නය පෙන්වීම
+        loadQuestion();
+    </script>
+
+</body>
+</html>    
+    
+
+ 

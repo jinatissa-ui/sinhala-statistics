@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <title>පිටුව 01 - චතුර්ථක අධ්‍යයනය</title>
+    <!-- පොදු Style Sheet එක සබඳීම -->
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <style>
+        /* වගුවේ Highlight වන සංඛ්‍යා සඳහා */
+        .highlight {
+            background-color: #ff2a2a !important;
+            color: white !important;
+            font-size: 1.2em;
+            transition: 0.3s;
+        }
+        .btn-ex {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-ex:hover { background-color: #1f618d; }
+
+        /* Reload / Reset Button Style */
+        .btn-reload {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 5px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-reload:hover { background-color: #d35400; }
+        
+        .btn-calc {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: left;
+            font-size: 14px;
+            width: 100%;
+            transition: 0.2s;
+        }
+        .btn-calc:hover:not(:disabled) { background-color: #219150; }
+
+        /* Disable කර ඇති බොත්තම් වල පෙනුම */
+        .btn-calc:disabled {
+            background-color: #bdc3c7 !important;
+            color: #7f8c8d !important;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .result-box {
+            background: #e8f8f5;
+            border-left: 4px solid #2ecc71;
+            padding: 6px 10px;
+            font-weight: bold;
+            min-height: 20px;
+            font-size: 15px;
+            color: #117a65;
+        }
+        .calc-step-box {
+            background-color: #fef9e7;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #f1c40f;
+            font-size: 13px;
+            line-height: 1.5;
+            min-height: 45px;
+            color: #7d6608;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page">
+        <div class="header"><h1 class="title"> චතුර්ථක </h1></div>
+        
+        <table>
+            <tr> 
+                <td><button class="btn-ex" onclick="loadExample(1)" style="width:80px">උදා: 1</button></td>
+                <td><button class="btn-ex" onclick="loadExample(2)" style="width:80px">උදා: 2</button></td>
+                <td><button class="btn-ex" onclick="loadExample(3)" style="width:80px">උදා: 3</button></td>
+                <td><button class="btn-reload" onclick="resetOutputs()" style="width:80px">නැවත</button></td>
+            </tr>
+        </table>
+        
+        <!-- වම් පස ආරෝහණ වගුව සහ දකුණු පස ගණනය කිරීම් -->
+        <table>
+            <tr>
+                <td rowspan="4">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>සංඛ්‍යා</th>
+                            </tr>
+                        </thead>
+                        <tbody id="data-table-body"></tbody>
+                    </table>
+                </td>
+                <td>
+                    <button class="btn-calc" id="btn-q1" onclick="calculateQ1()"> 1. පළමු චතුර්ථකය (Q₁) </button>
+                </td>
+                <td>
+                    <div class="result-box" id="res-q1"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn-calc" id="btn-q2" onclick="calculateQ2()" disabled> 2. දෙවන චතුර්ථකය / මධ්‍යස්ථය (Q₂) </button>
+                </td>
+                <td>
+                    <div class="result-box" id="res-q2"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn-calc" id="btn-q3" onclick="calculateQ3()" disabled> 3. තෙවන චතුර්ථකය (Q₃)</button>
+                </td>
+                <td>
+                    <div class="result-box" id="res-q3"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn-calc" id="btn-iqr" onclick="calculateIQR()" disabled> 4. අන්තශ්චතුර්ථක පරාසය (IQR)</button>
+                </td>
+                <td>
+                    <div class="result-box" id="res-iqr"></div>
+                </td>
+            </tr>
+        </table> 
+
+        <!-- පිළිතුර ආ හැටි පෙන්වන කොටුව -->
+        <div class="calc-step-box" id="calc-steps">
+            <strong>පිළිතුර ලැබෙන ආකාරය:</strong><br>
+            පළමුව Q₁ බොත්තම ක්ලික් කර ගණනය කිරීම් පියවර බලන්න.
+        </div>		
+		
+    </div>
+
+    <script>
+        // දත්ත ප්‍රමාණයන් 3ක්
+        const examples = {
+            1: [2, 5, 8, 11, 14, 17, 20],               // n = 7
+            2: [10, 15, 20, 25, 30, 35, 40, 45, 50],     // n = 9
+            3: [100, 120, 140, 160, 180]                 // n = 5
+        };
+
+        let currentData = examples[1];
+
+        function loadExample(exNum) {
+            currentData = examples[exNum];
+            renderTable();
+            resetOutputs();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('data-table-body');
+            tbody.innerHTML = '';
+            currentData.forEach((num, index) => {
+                let tr = document.createElement('tr');
+                tr.id = `row-${index}`;
+                tr.innerHTML = `<td></td><td>${num}</td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function clearHighlights() {
+            let rows = document.querySelectorAll('#data-table-body tr');
+            rows.forEach(r => r.classList.remove('highlight'));
+        }
+
+        function resetOutputs() {
+            clearHighlights();
+            document.getElementById('res-q1').innerText = '';
+            document.getElementById('res-q2').innerText = '';
+            document.getElementById('res-q3').innerText = '';
+            document.getElementById('res-iqr').innerText = '';
+            document.getElementById('calc-steps').innerHTML = '<strong>පිළිතුර ලැබෙන ආකාරය:</strong><br>පළමුව Q₁ බොත්තම ක්ලික් කර ගණනය කිරීම් පියවර බලන්න.';
+            
+            // බොත්තම් මුල් තත්වයට සකස් කිරීම
+            document.getElementById('btn-q1').disabled = false;
+            document.getElementById('btn-q2').disabled = true;
+            document.getElementById('btn-q3').disabled = true;
+            document.getElementById('btn-iqr').disabled = true;
+        }
+
+        function highlightValue(pos) {
+            clearHighlights();
+            if (Number.isInteger(pos)) {
+                let idx = pos - 1;
+                let row = document.getElementById(`row-${idx}`);
+                if (row) row.classList.add('highlight');
+            } else {
+                let lowerIdx = Math.floor(pos) - 1;
+                let upperIdx = Math.ceil(pos) - 1;
+                let r1 = document.getElementById(`row-${lowerIdx}`);
+                let r2 = document.getElementById(`row-${upperIdx}`);
+                if (r1) r1.classList.add('highlight');
+                if (r2) r2.classList.add('highlight');
+            }
+        }
+
+        function calculateQ1() {
+            let n = currentData.length;
+            let pos = (n + 1) / 4;
+            let val;
+            
+            if (Number.isInteger(pos)) {
+                val = currentData[pos - 1];
+                document.getElementById('calc-steps').innerHTML = 
+                    `<strong>Q₁ ලැබෙන ආකාරය:</strong><br>` +
+                    `• පද ගණන (n) = ${n}<br>` +
+                    `• Q₁ පිහිටීම = (n + 1) / 4 = (${n} + 1) / 4 = <b>${pos} වන පදය</b><br>` +
+                    `• ${pos} වන පදයේ අගය = <b>${val}</b>`;
+            } else {
+                let l = Math.floor(pos) - 1;
+                let u = Math.ceil(pos) - 1;
+                val = (currentData[l] + currentData[u]) / 2;
+                document.getElementById('calc-steps').innerHTML = 
+                    `<strong>Q₁ ලැබෙන ආකාරය:</strong><br>` +
+                    `• පද ගණන (n) = ${n}<br>` +
+                    `• Q₁ පිහිටීම = (${n} + 1) / 4 = <b>${pos} වන පදය</b><br>` +
+                    `• අගය = (${currentData[l]} + ${currentData[u]}) / 2 = <b>${val}</b>`;
+            }
+
+            document.getElementById('res-q1').innerText = ` Q₁ = ${val}`;
+            highlightValue(pos);
+
+            // Q2 බොත්තම Enable කිරීම
+            document.getElementById('btn-q2').disabled = false;
+        }
+
+        function calculateQ2() {
+            let n = currentData.length;
+            let pos = (n + 1) / 2;
+            let val;
+
+            if (Number.isInteger(pos)) {
+                val = currentData[pos - 1];
+                document.getElementById('calc-steps').innerHTML = 
+                    `<strong>Q₂ (මධ්‍යස්ථය) ලැබෙන ආකාරය:</strong><br>` +
+                    `• පද ගණන (n) = ${n}<br>` +
+                    `• Q₂ පිහිටීම = (n + 1) / 2 = (${n} + 1) / 2 = <b>${pos} වන පදය</b><br>` +
+                    `• ${pos} වන පදයේ අගය = <b>${val}</b>`;
+            } else {
+                let l = Math.floor(pos) - 1;
+                let u = Math.ceil(pos) - 1;
+                val = (currentData[l] + currentData[u]) / 2;
+                document.getElementById('calc-steps').innerHTML = 
+                    `<strong>Q₂ ලැබෙන ආකාරය:</strong><br>` +
+                    `• පද ගණන (n) = ${n}<br>` +
+                    `• Q₂ පිහිටීම = (${n} + 1) / 2 = <b>${pos} වන පදය</b><br>` +
+                    `• අගය = (${currentData[l]} + ${currentData[u]}) / 2 = <b>${val}</b>`;
+            }
+
+            document.getElementById('res-q2').innerText = `Q₂ = ${val}`;
+            highlightValue(pos);
+
+            // Q3 බොත්තම Enable කිරීම
+            document.getElementById('btn-q3').disabled = false;
+        }
+
+        function calculateQ3() {
+            let n = currentData.length;
+            let pos = (3 * (n + 1)) / 4;
+            let val;
+
+            if (Number.isInteger(pos)) {
+                val = currentData[pos - 1];
+                document.getElementById('calc-steps').innerHTML = 
+                    `<strong>Q₃ ලැබෙන ආකාරය:</strong><br>` +
+                    `• පද ගණන (n) = ${n}<br>` +
+                    `• Q₃ පිහිටීම = 3(n + 1) / 4 = 3(${n} + 1) / 4 = <b>${pos} වන පදය</b><br>` +
+                    `• ${pos} වන පදයේ අගය = <b>${val}</b>`;
+            } else {
+                let l = Math.floor(pos) - 1;
+                let u = Math.ceil(pos) - 1;
+                val = (currentData[l] + currentData[u]) / 2;
+                document.getElementById('calc-steps').innerHTML = 
+                    `<strong>Q₃ ලැබෙන ආකාරය:</strong><br>` +
+                    `• පද ගණන (n) = ${n}<br>` +
+                    `• Q₃ පිහිටීම = 3(${n} + 1) / 4 = <b>${pos} වන පදය</b><br>` +
+                    `• අගය = (${currentData[l]} + ${currentData[u]}) / 2 = <b>${val}</b>`;
+            }
+
+            document.getElementById('res-q3').innerText = `Q₃ = ${val}`;
+            highlightValue(pos);
+
+            // IQR බොත්තම Enable කිරීම
+            document.getElementById('btn-iqr').disabled = false;
+        }
+
+        function calculateIQR() {
+            let n = currentData.length;
+            let pos1 = (n + 1) / 4;
+            let pos3 = (3 * (n + 1)) / 4;
+            
+            let q1 = Number.isInteger(pos1) ? currentData[pos1 - 1] : (currentData[Math.floor(pos1)-1] + currentData[Math.ceil(pos1)-1])/2;
+            let q3 = Number.isInteger(pos3) ? currentData[pos3 - 1] : (currentData[Math.floor(pos3)-1] + currentData[Math.ceil(pos3)-1])/2;
+            let iqr = q3 - q1;
+
+            clearHighlights();
+            highlightValue(pos1);
+            let rows = document.querySelectorAll('#data-table-body tr');
+            if (Number.isInteger(pos3)) {
+                rows[pos3 - 1].classList.add('highlight');
+            } else {
+                rows[Math.floor(pos3)-1].classList.add('highlight');
+                rows[Math.ceil(pos3)-1].classList.add('highlight');
+            }
+
+            document.getElementById('res-iqr').innerText = `IQR = ${iqr}`;
+            document.getElementById('calc-steps').innerHTML = 
+                `<strong>අන්තශ්චතුර්ථක පරාසය (IQR) ලැබෙන ආකාරය:</strong><br>` +
+                `• IQR = Q₃ - Q₁<br>` +
+                `• Q₃ = ${q3} සහ Q₁ = ${q1}<br>` +
+                `• IQR = ${q3} - ${q1} = <b>${iqr}</b>`;
+        }
+
+        // ආරම්භයේදී පළමු උදාහරණය පෙන්වීම
+        loadExample(1);
+    </script>
+</body>
+</html>

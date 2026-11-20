@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>සංඛ්‍යානය - පිටුව 3</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .chart-container {
+            display: flex;
+            height: 250px;
+            margin: 10px 0;
+            border-bottom: 2px solid #333;
+            border-left: 2px solid #333;
+            position: relative;
+            background-color: #fafafa;
+        }
+
+        /* Y Axis Labels */
+        .y-axis {
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: space-between;
+            width: 25px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #555;
+            text-align: right;
+            padding-right: 4px;
+            margin-left: -28px;
+        }
+
+        /* Grid lines */
+        .grid-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .grid-line {
+            border-top: 1px dashed #ccc;
+            width: 100%;
+            height: 0;
+        }
+
+        /* Bars Area */
+        .bars-area {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+
+        .bar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: flex-end;
+            width: 16%;
+        }
+
+        .bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            height: 0%;
+            transition: height 0.3s ease;
+            border-radius: 4px 4px 0 0;
+        }
+
+        /* සතුන්ට වෙනස් වර්ණ */
+        .bar-elephant { background-color: #42a5f5; } /* නිල් */
+        .bar-pig      { background-color: #ec407a; } /* රෝස */
+        .bar-dog      { background-color: #ffa726; } /* තැඹිලි */
+        .bar-cat      { background-color: #ab47bc; } /* දම් */
+        .bar-rabbit   { background-color: #66bb6a; } /* කොළ */
+
+        /* X Axis Buttons */
+        .x-axis-btns {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 8px;
+        }
+
+        .btn-animal {
+            background-color: #ffffff;
+            border: 2px solid #007bff;
+            border-radius: 6px;
+            padding: 4px 2px;
+            cursor: pointer;
+            font-size: 14px;
+            width: 18%;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .btn-animal:hover:not(:disabled) {
+            background-color: #e3f2fd;
+            transform: translateY(-2px);
+        }
+
+        .btn-animal:disabled {
+            background-color: #e0e0e0;
+            border-color: #b0bec5;
+            color: #78909c;
+            cursor: not-allowed;
+        }
+
+        .success-box {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 8px;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page">
+        <div>
+            <!-- Header -->
+            <div class="header">
+                <h1 class="title">දත්ත නිරූපණය - තීර ප්‍රස්ථාරය</h1>
+            </div>
+
+            <h2 class="subtitle">ක්‍රියාකාරකම: බටන් ක්ලික් කරමින් තීර ප්‍රස්ථාරය අඳින්න.</h2>
+            <p style="font-size: 16px; margin-bottom: 6px;">
+                පහත දැක්වෙන සතුන්ගේ බටන් ක්ලික් කරමින්, පෙර පිටුවේ රැස් කළ දත්ත ප්‍රමාණයට තීර ප්‍රස්ථාරය පුරවන්න.
+            </p>
+
+            <!-- Chart Display -->
+            <div style="padding-left: 30px; margin-top: 15px;">
+                <div class="chart-container">
+                    <!-- Y Axis Labels (0-8) -->
+                    <div class="y-axis">
+                        <span>0</span><span>1</span><span>2</span><span>3</span>
+                        <span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
+                    </div>
+
+                    <!-- Grid Lines -->
+                    <div class="grid-lines">
+                        <div class="grid-line"></div><div class="grid-line"></div>
+                        <div class="grid-line"></div><div class="grid-line"></div>
+                        <div class="grid-line"></div><div class="grid-line"></div>
+                        <div class="grid-line"></div><div class="grid-line"></div>
+                        <div class="grid-line"></div>
+                    </div>
+
+                    <!-- Bars -->
+                    <div class="bars-area">
+                        <div class="bar-wrapper"><div id="bar-elephant" class="bar bar-elephant"></div></div>
+                        <div class="bar-wrapper"><div id="bar-pig" class="bar bar-pig"></div></div>
+                        <div class="bar-wrapper"><div id="bar-dog" class="bar bar-dog"></div></div>
+                        <div class="bar-wrapper"><div id="bar-cat" class="bar bar-cat"></div></div>
+                        <div class="bar-wrapper"><div id="bar-rabbit" class="bar bar-rabbit"></div></div>
+                    </div>
+                </div>
+
+                <!-- X Axis Buttons -->
+                <div class="x-axis-btns">
+                    <button id="btn-elephant" class="btn-animal" onclick="addBlock('elephant')">🐘 අලියා</button>
+                    <button id="btn-pig" class="btn-animal" onclick="addBlock('pig')">🐖 ඌරා</button>
+                    <button id="btn-dog" class="btn-animal" onclick="addBlock('dog')">🐕 බල්ලා</button>
+                    <button id="btn-cat" class="btn-animal" onclick="addBlock('cat')">🐈 බළලා</button>
+                    <button id="btn-rabbit" class="btn-animal" onclick="addBlock('rabbit')">🐇 හාවා</button>
+                </div>
+            </div>
+
+            <!-- Completion Message -->
+            <div id="successMsg" class="success-box">
+                🎉 හොඳයි! ඔබ තීර ප්‍රස්ථාරය නිවැරදිව කළා. අලි - 4යි, ඌරන් - 2යි, බල්ලන් - 6යි, බළලුන් - 8යි, හාවුන් - 5 යි.
+            </div>
+        </div>
+
+        <!-- Footer -->
+        
+    </div>
+
+    <script>
+        // Target values from Page 2
+        const targets = { elephant: 4, pig: 2, dog: 6, cat: 8, rabbit: 5 };
+        const currentValues = { elephant: 0, pig: 0, dog: 0, cat: 0, rabbit: 0 };
+        const maxVal = 8; // Y-axis max value
+        let completedCount = 0;
+
+        function addBlock(animal) {
+            if (currentValues[animal] < targets[animal]) {
+                currentValues[animal]++;
+                
+                // Calculate height percentage (Each unit = 100 / 8 = 12.5%)
+                let heightPercent = (currentValues[animal] / maxVal) * 100;
+                document.getElementById(`bar-${animal}`).style.height = `${heightPercent}%`;
+
+                // Check if target reached for this animal
+                if (currentValues[animal] === targets[animal]) {
+                    const btn = document.getElementById(`btn-${animal}`);
+                    btn.disabled = true;
+                    btn.innerHTML += " ✔";
+                    completedCount++;
+
+                    // Check if all bars completed
+                    if (completedCount === 5) {
+                        document.getElementById("successMsg").style.display = "block";
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

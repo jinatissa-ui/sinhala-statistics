@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<link type ='text/css' rel= 'stylesheet' href='../css/style.css'>
+<script src='../js/myjs.js'></script>  
+<title>මධ්‍යන්‍යය - අභ්‍යාස</title>     
+<style type="text/css">
+        .quiz-card {
+            background-color: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 5px;
+            text-align: center;
+        }
+
+        .question-number {
+            font-size: 16px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+
+        .data-display {
+            background-color: #ffffff;
+            border: 1px dashed #007bff;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #d9534f;
+            margin: 8px 0;
+            letter-spacing: 1px;
+        }
+
+        .input-box {
+            width: 100px;
+            padding: 6px;
+            font-size: 16px;
+            text-align: center;
+            border: 2px solid #cccccc;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .result-msg {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            min-height: 40px;
+        }
+
+        .correct { color: #28a745; }
+        .wrong { color: #dc3545; }
+
+        .score-board {
+            background-color: #e8f5e9;
+            border: 2px dashed #28a745;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .score-num {
+            font-size: 32px;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+</style> 
+</head>                
+<body>   
+          
+<div class="page">
+        <div>
+            <!-- Header -->
+            <div class="header">
+                <h1 class="title">මධ්‍යන්‍යය - අභ්‍යාස</h1>
+            </div>
+
+            <p style="margin-bottom: 5px;">
+                දත්තවල එකතුව ගෙන දත්ත සංඛ්‍යාවෙන් බෙදා <b>මධ්‍යන්‍යය</b> සොයා ලියා පරීක්ෂා කරන්න.
+            </p>
+
+            <!-- Quiz Container -->
+            <div id="quizContainer" class="quiz-card">
+                <div class="question-number" id="qNumber">ප්‍රශ්නය 1 / 10</div>
+                <div style="font-size: 14px; color: #666;">දත්ත සමූහය:</div>
+                <div class="data-display" id="dataDisplay"></div>
+
+                <div style="margin-top: 8px;">
+                    <label for="userAnswer" style="font-size: 16px;"><b>මධ්‍යන්‍යය = </b></label>
+                    <input type="number" id="userAnswer" class="input-box" step="any" placeholder="අගය" onkeypress="handleKeyPress(event)">
+                </div>
+
+                <div style="margin-top: 10px;">
+                    <button class="nav-btn" id="checkBtn" onclick="checkAnswer()">පිළිතුර බලන්න ✔</button>
+                    <button class="nav-btn" id="nextBtn" onclick="nextQuestion()" style="display: none; background-color: #28a745;">ඊළඟ ප්‍රශ්නය ➔</button>
+                </div>
+
+                <div class="result-msg" id="resultMsg"></div>
+            </div>
+
+            <!-- Score View -->
+            <div id="scoreContainer" class="score-board" style="display: none;">
+                <h2 style="color: #1b5e20; font-size: 18px;">අභ්‍යාසය අවසන්! 🎉</h2>
+                <p style="font-size: 13px; margin-top: 5px;">ඔබ ලබාගත් සමස්ත ලකුණු ප්‍රමාණය:</p>
+                <div class="score-num" id="finalScore">0%</div>
+                <p id="scoreComment" style="font-size: 13px; font-weight: bold; color: #333;"></p>
+                <button class="nav-btn" onclick="restartQuiz()" style="margin-top: 15px; background-color: #17a2b8;">නැවත කරන්න 🔄</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript logic -->
+    <script>
+        // මධ්‍යන්‍යය සඳහා වන ප්‍රශ්න 10
+        const questions = [
+            { data: "4, 8, 6, 2", answer: 5, steps: "එකතුව = 20, බෙදීම 20 ÷ 4" },
+            { data: "10, 20, 30, 40", answer: 25, steps: "එකතුව = 100, බෙදීම 100 ÷ 4" },
+            { data: "5, 15, 10, 20, 0", answer: 10, steps: "එකතුව = 50, බෙදීම 50 ÷ 5" },
+            { data: "7, 3, 9, 5", answer: 6, steps: "එකතුව = 24, බෙදීම 24 ÷ 4" },
+            { data: "12, 18, 15", answer: 15, steps: "එකතුව = 45, බෙදීම 45 ÷ 3" },
+            { data: "1, 2, 3, 4, 5", answer: 3, steps: "එකතුව = 15, බෙදීම 15 ÷ 5" },
+            { data: "8, 12, 16, 4", answer: 10, steps: "එකතුව = 40, බෙදීම 40 ÷ 4" },
+            { data: "14, 6, 10, 20", answer: 12.5, steps: "එකතුව = 50, බෙදීම 50 ÷ 4" },
+            { data: "25, 35, 15, 25", answer: 25, steps: "එකතුව = 100, බෙදීම 100 ÷ 4" },
+            { data: "9, 11, 13, 7", answer: 10, steps: "එකතුව = 40, බෙදීම 40 ÷ 4" }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            document.getElementById("qNumber").innerText = `ප්‍රශ්නය ${currentQ + 1} / ${questions.length}`;
+            document.getElementById("dataDisplay").innerText = questions[currentQ].data;
+            document.getElementById("userAnswer").value = "";
+            document.getElementById("userAnswer").disabled = false;
+            document.getElementById("resultMsg").innerHTML = "";
+            document.getElementById("checkBtn").style.display = "inline-block";
+            document.getElementById("nextBtn").style.display = "none";
+            document.getElementById("userAnswer").focus();
+        }
+
+        function checkAnswer() {
+            const userAns = parseFloat(document.getElementById("userAnswer").value);
+            const correctAns = questions[currentQ].answer;
+            const stepsText = questions[currentQ].steps;
+            const resultDiv = document.getElementById("resultMsg");
+
+            if (isNaN(userAns)) {
+                resultDiv.innerHTML = "<span style='color: #ff9800;'>කරුණාකර පිළිතුරක් ඇතුළත් කරන්න!</span>";
+                return;
+            }
+
+            document.getElementById("userAnswer").disabled = true;
+            document.getElementById("checkBtn").style.display = "none";
+            document.getElementById("nextBtn").style.display = "inline-block";
+
+            if (Math.abs(userAns - correctAns) < 0.01) {
+                score++;
+                resultDiv.innerHTML = "<span class='correct'>✔ නිවැරදියි! ඉතා හොඳයි.</span>";
+            } else {
+                resultDiv.innerHTML = `<span class='wrong'>✖ වැරදියි!</span><br><span style='font-size:11.5px; color:#555;'>සුළු කිරීම: ${stepsText} <br>නිවැරදි පිළිතුර: <b>${correctAns}</b></span>`;
+            }
+        }
+
+        function nextQuestion() {
+            currentQ++;
+            if (currentQ < questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById("quizContainer").style.display = "none";
+            const scoreContainer = document.getElementById("scoreContainer");
+            scoreContainer.style.display = "block";
+
+            const percentage = (score / questions.length) * 100;
+            document.getElementById("finalScore").innerText = `${percentage}%`;
+
+            let comment = "";
+            if (percentage === 100) comment = "ඉතා විශිෂ්ටයි! ඔබ මධ්‍යන්‍යය මනාව වටහාගෙන ඇත. 🌟";
+            else if (percentage >= 70) comment = "ඉතා හොඳයි! දක්ෂ ලෙස පිළිතුරු දුන්නා. 👍";
+            else if (percentage >= 50) comment = "හොඳයි, තව ටිකක් පුහුණු වෙමු! 🙂";
+            else comment = "නැවතත් හැඳින්වීම් පිටුව කියවා උත්සාහ කරන්න. 💪";
+
+            document.getElementById("scoreComment").innerText = comment;
+        }
+
+        function restartQuiz() {
+            currentQ = 0;
+            score = 0;
+            document.getElementById("quizContainer").style.display = "block";
+            document.getElementById("scoreContainer").style.display = "none";
+            loadQuestion();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                if (document.getElementById("checkBtn").style.display !== "none") {
+                    checkAnswer();
+                } else {
+                    nextQuestion();
+                }
+            }
+        }
+
+        loadQuestion();
+    </script>
+
+</body>
+</html>

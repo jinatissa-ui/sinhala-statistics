@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<link type ='text/css' rel= 'stylesheet' href='../css/style.css'>
+<script src='../js/myjs.js'></script>  
+<title>UJ NEW HTML EDITOR</title>     
+<style type="text/css">
+
+
+/* දෙවන පිටුව සඳහා විශේෂිත පොඩි CSS කිහිපයක් */
+        .btn-container {
+            text-align: center;
+            margin: 12px 0;
+        }
+        .example-box {
+            background-color: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 10px;
+            min-height: 85px;
+        }
+        .mode-result {
+            color: #2e7d32;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+</style> 
+<script language="javascript" > 
+
+</script>           
+</head>                
+<body >   
+          
+<div class="page">
+        <div>
+            <!-- Header -->
+           <div class="header">
+               <h1 class="title">මාතය (Mode)</h1>
+            </div>
+
+            <h2 class="subtitle">1. මාතය යනු කුමක්ද?</h2>
+            <p>
+                දත්ත සමූහයක <b>වඩාත්ම වැඩි වාර ගණනක්</b> (වැඩිම සංඛ්‍යාතයක්) වාර්තා වී ඇති අගය එම දත්ත සමූහයේ <b>මාතය</b> ලෙස හැඳින්වේ.
+            </p>
+
+            <div class="info-box">
+                <b>විශේෂ කරුණු:</b>
+                <ul style="margin-left: 18px; margin-top: 5px; font-size: 12.5px;">
+                    <li>දත්ත සමූහයකට එකම මාතයක් තිබිය හැක.</li>
+                    <li>මාතයන් එකකට වඩා (කීපයක්) තිබිය හැක.</li>
+                    <li>සියලුම දත්ත සමාන වාර ගණනක් තිබේ නම් මාතයක් නැත.</li>
+                </ul>
+            </div>
+
+            <h2 class="subtitle">2. උදාහරණ මගින් තහවුරු කරගනිමු</h2>
+            <p style="margin-bottom: 5px;">
+                පහත බටන් එක ක්ලික් කර වෙනස් උදාහරණ නිරීක්ෂණය කරන්න:
+            </p>
+
+            <!-- Interactive Section -->
+            <div class="btn-container">
+                <button class="nav-btn" onclick="nextExample()">තවත් උදාහරණයක් බලන්න 🔄</button>
+            </div>
+
+            <div class="example-box" id="exampleDisplay">
+                <!-- JavaScript මගින් මෙතැනට උදාහරණ එක්වේ -->
+            </div>
+        </div>
+
+        <!-- Footer -->
+        
+    </div>
+
+    <!-- JavaScript code -->
+    <script>
+        // උදාහරණ ලැයිස්තුව
+        const examples = [
+            {
+                data: "3, 5, 7, 5, 9, 5, 2",
+                explanation: "මෙහි <b>5</b> අගය 3 වතාවක් යෙදී ඇත (වැඩිම වාර ගණන).",
+                mode: "මාතය = 5"
+            },
+            {
+                data: "12, 15, 12, 18, 15, 20",
+                explanation: "මෙහි <b>12</b> සහ <b>15</b> යන අගයන් දෙකම 2 වතාව බැගින් යෙදී ඇත.",
+                mode: "මාතය = 12 සහ 15 (බහු-මාත)"
+            },
+            {
+                data: "4, 4, 8, 10, 8, 4, 12",
+                explanation: "මෙහි <b>4</b> අගය 3 වතාවක් යෙදී ඇත.",
+                mode: "මාතය = 4"
+            },
+            {
+                data: "10, 20, 30, 40, 50",
+                explanation: "මෙහි සියලුම අගයන් යෙදී ඇත්තේ එකම වාර ගණනක් (1 වතාවක්) බැගිනි.",
+                mode: "මාතයක් නොමැත"
+            }
+        ];
+
+        let currentIndex = 0;
+
+        function showExample(index) {
+            const ex = examples[index];
+            const display = document.getElementById("exampleDisplay");
+            display.innerHTML = `
+                <div style="font-size: 13px;"><b>දත්ත සමූහය:</b> <span class="data-points">${ex.data}</span></div>
+                <p style="font-size: 12px; margin: 4px 0;">${ex.explanation}</p>
+                <div class="mode-result">👉 ${ex.mode}</div>
+            `;
+        }
+
+        function nextExample() {
+            currentIndex = (currentIndex + 1) % examples.length;
+            showExample(currentIndex);
+        }
+
+        // මුලින්ම පළමු උදාහරණය පෙන්වීම
+        showExample(0);
+    </script>
+
+</body>
+</html>    
+    
+</body>           
+</html>
+ 

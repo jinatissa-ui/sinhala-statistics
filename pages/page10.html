@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>වට ප්‍රස්ථාර - සංඛ්‍යානය</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .pie-chart-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 6px 0;
+        }
+
+        /* SVG Pie Chart Style */
+        .legend {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .color-box {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        /* Question Form Style */
+        .quiz-container {
+            font-size: 16px;
+            margin-top: 4px;
+        }
+
+        .question-item {
+            background-color: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 5px 8px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .question-text {
+            color: #333;
+        }
+
+        .quiz-input {
+            width: 50px;
+            text-align: center;
+            padding: 2px 4px;
+            font-size: 16px;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        /* Correct / Incorrect Highlights */
+        .correct {
+            border-color: #28a745 !important;
+            background-color: #d4edda !important;
+            color: #155724;
+        }
+
+        .incorrect {
+            border-color: #dc3545 !important;
+            background-color: #f8d7da !important;
+            color: #721c24;
+        }
+
+        .mark-span {
+            font-weight: bold;
+            font-size: 16px;
+            margin-left: 5px;
+            width: 15px;
+            display: inline-block;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .btn-reset {
+            background-color: #dc3545 !important;
+        }
+        .btn-reset:hover {
+            background-color: #bd2130 !important;
+        }
+
+        .score-box {
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+  <div class="page">
+    <div>
+        <!-- Header -->
+        <div class="header">
+            <h1 class="title">වට ප්‍රස්තාර - අභ්‍යාසය</h1>
+        </div>
+
+        <p style="font-size: 16px; margin-bottom: 4px;">ගමක වී, එළවළු සහ කෙසෙල් වගාකරන ගොවීන් නිරූපණය වන වට ප්‍රස්තාරය පහත දැක්වේ. <b>මුළු ගොවීන් ගණන 75 කි.</b> </p>
+
+        <!-- Pie Chart and Legend Section -->
+        <div class="pie-chart-container">
+            <!-- SVG Pie Chart (Radius 50, Center 50,50) -->
+            <!-- Pie Chart (වී: #DC3545, එළවළු: #28a745, කෙසෙල්: #ffc107) -->
+<svg width="110" height="110" viewBox="0 0 100 100">
+    <!-- 1. වී වගාව (192°) -> 0° සිට 192° දක්වා -->
+    <path d="M 50 50 L 100 50 A 50 50 0 1 1 0.6 39.6 Z" fill="#DC3545" stroke="#ccc"/>
+    
+    <!-- 2. එළවළු වගාව (72°) -> 192° සිට 264° දක්වා -->
+    <path d="M 50 50 L 0.6 39.6 A 50 50 0 0 1 44.8 0.2 Z" fill="#28a745" stroke="#ccc"/>
+    
+    <!-- 3. කෙසෙල් වගාව (96°) -> 264° සිට 360° (0°) දක්වා -->
+    <path d="M 50 50 L 44.8 0.2 A 50 50 0 0 1 100 50 Z" fill="#ffc107"  stroke="#ccc" />
+    
+    <!-- වට රවුමේ ඉම (Border Outline) -->
+    
+</svg>
+            <!-- Legend -->
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="color-box" style="background-color: #DC3545"></span>
+                    <span>වී වගාව (192°)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="color-box" style="background-color: #28a745;"></span>
+                    <span>එළවළු වගාව (72°)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="color-box" style="background-color: #ffc107;"></span>
+                    <span>කෙසෙල් වගාව (96°)</span>
+                </div>
+            </div>
+        </div>
+<p style="font-size:16px"><b>වට ප්‍රස්තාරයට අනුව පිළිතුරු සපයන්න.</b></p>
+        <!-- Questions Section -->
+        <div class="quiz-container">
+            <div class="question-item">
+                <span class="question-text">1. වී වගා කරන ගොවීන් ගණන:</span>
+                <div>
+                    <input type="text" id="q1" class="quiz-input">
+                    <span id="cw1" class="mark-span"></span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-text">2. එළවළු වගා කරන ගොවීන් ගණන:</span>
+                <div>
+                    <input type="text" id="q2" class="quiz-input">
+                    <span id="cw2" class="mark-span"></span>
+                </div>
+            </div>
+
+            <div class="question-item">
+                <span class="question-text">3. කෙසෙල් වගා කරන ගොවීන් ගණන:</span>
+                <div>
+                    <input type="text" id="q3" class="quiz-input">
+                    <span id="cw3" class="mark-span"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons & Score -->
+        <div class="btn-group">
+            <button class="nav-btn" onclick="checkAnswers()">හරිද බලන්න</button>
+            <button class="nav-btn btn-reset" onclick="resetForm()">නැවත කරන්න</button>
+            
+        </div>
+		<div id="scoreDisplay" class="score-box"></div>
+		
+		
+    </div>
+
+    <!-- Footer -->
+    
+  </div>
+
+  <script>
+    function checkAnswers() {
+        // ගණනය කිරීම් (මුළු ගොවීන් = 75, මුළු අංශක = 360):
+        // වී: (192 / 360) * 75 = 40
+        // එළවළු: (72 / 360) * 75 = 15
+        // කෙසෙල්: (96 / 360) * 75 = 20
+        const correctAnswers = {
+            q1: "40",
+            q2: "15",
+            q3: "20"
+        };
+
+        let correctCount = 0;
+        const totalQuestions = 3;
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const fieldId = 'q' + i;
+            const spanId = 'cw' + i;
+
+            const inputElem = document.getElementById(fieldId);
+            const spanElem = document.getElementById(spanId);
+            const userAns = inputElem.value.trim();
+
+            if (userAns === correctAnswers[fieldId]) {
+                inputElem.className = "quiz-input correct";
+                spanElem.textContent = "✓";
+                spanElem.style.color = "#f00";
+                correctCount++;
+            } else {
+                inputElem.className = "quiz-input incorrect";
+                spanElem.textContent = "✗";
+                spanElem.style.color = "#f00";
+            }
+        }
+
+        // ලකුණු ප්‍රතිශතය (%):
+        const percentage = Math.round((correctCount / totalQuestions) * 100);
+        const scoreDisplay = document.getElementById('scoreDisplay');
+
+        if (percentage === 100) {
+            scoreDisplay.innerHTML = "ලකුණු: 100% 🎉";
+            scoreDisplay.style.color = "#28a745";
+        } else {
+            scoreDisplay.innerHTML = "ලකුණු: " + percentage + "%";
+            scoreDisplay.style.color = "#f00";
+        }
+    }
+
+    function resetForm() {
+        for (let i = 1; i <= 3; i++) {
+            const inputElem = document.getElementById('q' + i);
+            const spanElem = document.getElementById('cw' + i);
+
+            inputElem.value = "";
+            inputElem.className = "quiz-input";
+            spanElem.textContent = "";
+        }
+        document.getElementById('scoreDisplay').innerHTML = "";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>සංඛ්‍යානය - පිටුව 2</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .emoji-box {
+            border: 1px dashed #007bff;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            padding: 8px;
+            text-align: center;
+            min-height: 100px;
+            margin-bottom: 10px;
+        }
+
+        .emoji-box span {
+            font-size: 22px;
+            cursor: pointer;
+            display: inline-block;
+            margin: 2px 4px;
+            transition: transform 0.1s;
+            user-select: none;
+        }
+
+        .emoji-box span:hover {
+            transform: scale(1.3);
+        }
+
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            background-color: #fff;
+        }
+
+        table.data-table th, table.data-table td {
+            border: 1px solid #cccccc;
+            padding: 4px;
+            text-align: center;
+        }
+
+        table.data-table th {
+            background-color: #e3f2fd;
+            color: #0d47a1;
+        }
+
+        .tally-cell {
+            text-align: left !important;
+            padding-left: 8px !important;
+        }
+
+        .success-box {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 8px;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page">
+        <div>
+            <!-- Header -->
+            <div class="header">
+                <h1 class="title">දත්ත රැස්කිරීම </h1>
+            </div>
+
+            <h2 class="subtitle">ක්‍රියාකාරකම: රූප මත ක්ලික් කරමින් වගුව පුරවන්න.</h2>
+
+            <!-- Emoji Box -->
+            <div class="emoji-box" id="box1">
+                <span onclick="countAnimal(this, 'elephant')">🐘</span>
+                <span onclick="countAnimal(this, 'rabbit')">🐇</span>
+                <span onclick="countAnimal(this, 'cat')">🐈</span>
+                <span onclick="countAnimal(this, 'cat')">🐈</span>
+                <span onclick="countAnimal(this, 'dog')">🐕</span>
+                <span onclick="countAnimal(this, 'pig')">🐖</span>
+                <span onclick="countAnimal(this, 'cat')">🐈</span>
+                <span onclick="countAnimal(this, 'rabbit')">🐇</span>
+                <span onclick="countAnimal(this, 'dog')">🐕</span>
+                <span onclick="countAnimal(this, 'elephant')">🐘</span>
+                <span onclick="countAnimal(this, 'cat')">🐈</span>
+                <span onclick="countAnimal(this, 'dog')">🐕</span>
+                <span onclick="countAnimal(this, 'elephant')">🐘</span>
+                <span onclick="countAnimal(this, 'cat')">🐈</span>
+                <span onclick="countAnimal(this, 'dog')">🐕</span>
+                <span onclick="countAnimal(this, 'rabbit')">🐇</span>
+                <span onclick="countAnimal(this, 'cat')">🐈</span>
+                <span onclick="countAnimal(this, 'dog')">🐕</span>
+                <span onclick="countAnimal(this, 'pig')">🐖</span>
+                <span onclick="countAnimal(this, 'cat')">🐈</span>
+                <span onclick="countAnimal(this, 'elephant')">🐘</span>
+                <span onclick="countAnimal(this, 'dog')">🐕</span>
+                <span onclick="countAnimal(this, 'rabbit')">🐇</span>
+                <span onclick="countAnimal(this, 'cat')">🐈</span>
+                <span onclick="countAnimal(this, 'rabbit')">🐇</span>
+            </div>
+
+            <!-- Table -->
+            <table class="data-table">
+                <tr>
+                    <th style="width: 30%;">සත්තුවා</th>
+                    <th style="width: 45%;">ප්‍රගණන ලකුණු</th>
+                    <th style="width: 25%;">සංඛ්‍යාතය (ගණන)</th>
+                </tr>
+                <tr>
+                    <td>අලියා 🐘</td>
+                    <td id="tally-elephant" class="tally-cell"></td>
+                    <td id="count-elephant">0</td>
+                </tr>
+                <tr>
+                    <td>ඌරා 🐖</td>
+                    <td id="tally-pig" class="tally-cell"></td>
+                    <td id="count-pig">0</td>
+                </tr>
+                <tr>
+                    <td>බල්ලා 🐕</td>
+                    <td id="tally-dog" class="tally-cell"></td>
+                    <td id="count-dog">0</td>
+                </tr>
+                <tr>
+                    <td>බළලා 🐈</td>
+                    <td id="tally-cat" class="tally-cell"></td>
+                    <td id="count-cat">0</td>
+                </tr>
+                <tr>
+                    <td>හාාවා 🐇</td>
+                    <td id="tally-rabbit" class="tally-cell"></td>
+                    <td id="count-rabbit">0</td>
+                </tr>
+            </table>
+
+            <div id="successMsg" class="success-box">
+                🎉 සියලුම දත්ත රැස්කර අවසන්! මුළු සතුන් ගණන: 25 කි.
+            </div>
+        </div>
+
+        <!-- Footer -->
+        
+    </div>
+
+    <script>
+        // දත්ත ගණන් තබාගැනීම
+        const counts = { elephant: 0, pig: 0, dog: 0, cat: 0, rabbit: 0 };
+        let totalCount = 0;
+
+        // Tally Mark (SVG) ඇඳීමේ ශ්‍රිතය
+        function drawTallyGroup(n) {
+            let svg = `<svg width="22" height="18" style="vertical-align: middle; margin-right: 3px;">`;
+            // සිරස් ඉරි 4 දක්වා
+            for (let i = 0; i < Math.min(n, 4); i++) {
+                let x = 4 + i * 4;
+                svg += `<line x1="${x}" y1="2" x2="${x-4}" y2="16" stroke="#000" stroke-width="1"/>`;
+            }
+            // 5 වන හරස් ඉර
+            if (n === 5) {
+                svg += `<line x1="4" y1="2" x2="14" y2="16" stroke="#000" stroke-width="1"/>`;
+            }
+            svg += `</svg>`;
+            return svg;
+        }
+
+        function renderTallyHTML(count) {
+            let groups = Math.floor(count / 5);
+            let remainder = count % 5;
+            let html = "";
+            for (let i = 0; i < groups; i++) {
+                html += drawTallyGroup(5);
+            }
+            if (remainder > 0) {
+                html += drawTallyGroup(remainder);
+            }
+            return html;
+        }
+
+        function countAnimal(element, animal) {
+            // රූපය மறை කිරීම/ඉවත් කිරීම
+            element.style.visibility = "hidden";
+
+            counts[animal]++;
+            totalCount++;
+
+            // UI updating
+            document.getElementById(`count-${animal}`).innerText = counts[animal];
+            document.getElementById(`tally-${animal}`).innerHTML = renderTallyHTML(counts[animal]);
+
+            if (totalCount === 25) {
+                document.getElementById("successMsg").style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>

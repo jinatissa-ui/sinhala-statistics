@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <title>2022 O/L - ප්‍රශ්නය 06 (පිළිතුරු පිටුව)</title>
+	<link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            font-family: 'Iskoola Pota', Arial, sans-serif;
+            margin: 0;
+            padding: 5px;
+            background-color: #f5f5f5;
+        }
+        .paper-page {
+            width: 470px;
+            height: 550px;
+            background: #ffffff;
+            border: 1px solid #b2bec3;
+            padding: 8px 10px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            font-size: 10px;
+            line-height: 1.3;
+            position: relative;
+        }
+        .header 5646{
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 2px;
+            margin-bottom: 4px;
+        }
+        .header h4 { margin: 0; font-size: 14px; }
+
+        .tbl-calc {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1px 0;
+        }
+        .tbl-calc th, .tbl-calc td {
+            border: 1px solid #444;
+            padding: 1px;
+            text-align: center;
+            font-size: 12px;
+        }
+        .tbl-calc th { background-color: #f0f0f0; }
+        .tbl-calc input {
+            width: 50px;
+            padding: 1px;
+            text-align: center;
+            font-size: 10px;
+            border: 1px solid #888;
+            border-radius: 2px;
+        }
+
+        .q-box {
+            margin: 3px 0;
+            padding: 2px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        .short-input {
+            width: 55px;
+            padding: 1px;
+            text-align: center;
+            font-size: 14px;
+            border: 1px solid #888;
+            border-radius: 2px;
+            font-weight: bold;
+        }
+        .mark-status {
+            font-weight: bold;
+            font-size: 14px;
+            margin-left: 3px;
+        }
+
+        .btn-check {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 3px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .btn-show-ans {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 3px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 3px;
+            cursor: pointer;
+            display: none;
+            margin-left: 5px;
+        }
+        .score-box {
+            margin-top: 3px;
+            padding: 2px;
+            background: #eef9f1;
+            border: 1px dashed #27ae60;
+            font-size: 14px;
+            font-weight: bold;
+            color: #1e8449;
+            text-align: center;
+            display: none;
+        }
+        .nav-btn {
+            float: left;
+            background: #7f8c8d;
+            color: #fff;
+            text-decoration: none;
+            padding: 2px 5px;
+            font-size: 12px;
+            border-radius: 3px;
+        }
+		
+		.btn-clear {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 2px 6px;
+            font-size: 12px;
+            border-radius: 3px;
+            cursor: pointer;
+        }	
+		
+		
+        .correct-input { background-color: #d4edda; border-color: #28a745; color: #155724; }
+        .wrong-input { background-color: #f8d7da; border-color: #dc3545; color: #721c24; }
+    </style>
+</head>
+<body>
+
+    <div class="page">
+        
+        <div class="header">
+            <h4>අ.පො.ස. (සාමාන්‍ය පෙළ) - 2022 | ගණිතය II - ප්‍රශ්නය 06</h4>
+        </div>
+
+        <!-- (i) වගුව සහ මධ්‍යන්‍යය -->
+        <div class="q-box">
+            <b>(i) මධ්‍යන්‍යය සෙවීම සඳහා වගුව සම්පූර්ණ කරන්න:</b>
+            <table class="tbl-calc">
+                <tr>
+                    <th>දුර (km)</th>
+                    <th>සංඛ්‍යාතය (f)</th>
+                    <th>මධ්‍ය අගය (x)</th>
+                    <th>fx</th>
+                </tr>
+                <tr><td>1 – 3</td><td>6</td><td><input type="number" id="x1"></td><td><input type="number" id="fx1"></td></tr>
+                <tr><td>3 – 5</td><td>10</td><td><input type="number" id="x2"></td><td><input type="number" id="fx2"></td></tr>
+                <tr><td>5 – 7</td><td>20</td><td><input type="number" id="x3"></td><td><input type="number" id="fx3"></td></tr>
+                <tr><td>7 – 9</td><td>8</td><td><input type="number" id="x4"></td><td><input type="number" id="fx4"></td></tr>
+                <tr><td>9 – 11</td><td>4</td><td><input type="number" id="x5"></td><td><input type="number" id="fx5"></td></tr>
+                <tr><td>11 – 13</td><td>0</td><td><input type="number" id="x6"></td><td><input type="number" id="fx6"></td></tr>
+                <tr><td>13 – 15</td><td>2</td><td><input type="number" id="x7"></td><td><input type="number" id="fx7"></td></tr>
+                <tr style="font-weight: bold; background-color: #fafafa;">
+                    <td>එකතුව</td>
+                    <td>Σf = 50</td>
+                    <td>-</td>
+                    <td>Σfx = <input type="number" id="sfx" class="short-input"></td>
+                </tr>
+            </table>
+            <div style="margin-top:3px;">
+                <b>මධ්‍යන්‍යය(දශමස්ථාන 2කට) = </b><input type="number" step="0.01" id="mean-ans" class="short-input" placeholder=""> km
+                <span id="m-q1" class="mark-status"></span>
+            </div>
+        </div>
+
+        <!-- (ii) ප්‍රශ්නය -->
+        <div class="q-box">
+            <b>(ii) </b>
+          ලීටරයකින් ගිය හැකි දුර(දශමස්ථාන 2කට)  = <input type="number" step="0.01" id="q2-ans" class="short-input" placeholder=""> km
+            <span id="m-q2" class="mark-status"></span>
+        </div>
+
+        <!-- (iii) ප්‍රශ්නය -->
+        <div class="q-box">
+            <b>(iii) </b>
+            ඉතිරිකරගත හැකි මුදල = රු. <input type="number" id="q3-ans" class="short-input" placeholder="">
+            <span id="m-q3" class="mark-status"></span>
+        </div>
+
+        <div style="text-align: center; margin-top: 6px;">
+            <button id="btnCheck" class="btn-check" onclick="checkAndScore()"> පිළිතුරු පරීක්ෂා කරන්න</button>
+            <button id="btnShowAns" class="btn-show-ans" onclick="showCorrectAnswers()"> නිවැරදි පිළිතුරු </button>
+			<button id="btnClearAll" class="btn-clear" style="background-color: #c0392b;" onclick="res()"> නැවතත්</button>
+			
+        </div>
+
+        <div id="scoreBox" class="score-box"></div>
+    </div>
+
+    <script>
+        function setMark(elementId, isCorrect) {
+            let el = document.getElementById(elementId);
+            if (!el) return;
+            if (isCorrect) {
+                el.className = 'correct-input';
+            } else {
+                el.className = 'wrong-input';
+            }
+        }
+
+        function checkAndScore() {
+            let score = 0;
+
+            // Table Checking (Mid Values, FX values and Σfx)
+            let xOk = (document.getElementById('x1').value == 2 && document.getElementById('x2').value == 4 &&
+                       document.getElementById('x3').value == 6 && document.getElementById('x4').value == 8 &&
+                       document.getElementById('x5').value == 10 && document.getElementById('x6').value == 12 &&
+                       document.getElementById('x7').value == 14);
+
+            let fxOk = (document.getElementById('fx1').value == 12 && document.getElementById('fx2').value == 40 &&
+                        document.getElementById('fx3').value == 120 && document.getElementById('fx4').value == 64 &&
+                        document.getElementById('fx5').value == 40 && document.getElementById('fx6').value == 0 &&
+                        document.getElementById('fx7').value == 28);
+
+            let sfxVal = parseInt(document.getElementById('sfx').value);
+            let sfxOk = (sfxVal === 304);
+
+            // Inputs to mark green/red for table
+            for(let i=1; i<=7; i++) {
+                setMark('x'+i, (document.getElementById('x'+i).value == i*2));
+            }
+            setMark('sfx', sfxOk);
+
+            // (i) Check Mean = 6.08
+            let meanVal = parseFloat(document.getElementById('mean-ans').value);
+            let meanOk = (meanVal === 6.08);
+            let elMean = document.getElementById('mean-ans');
+            let mq1 = document.getElementById('m-q1');
+
+            if (xOk && fxOk && sfxOk && meanOk) {
+                elMean.className = 'short-input correct-input';
+                mq1.innerHTML = '✔'; mq1.style.color = 'green';
+                score += 5; // 5 marks for part i
+            } else {
+                elMean.className = 'short-input wrong-input';
+                mq1.innerHTML = '✖'; mq1.style.color = 'red';
+                if(xOk) score += 1;
+                if(fxOk) score += 1;
+                if(sfxOk) score += 1;
+                if(meanOk) score += 2;
+            }
+
+            // (ii) Check Distance per Liter = 9.12
+            let q2Val = parseFloat(document.getElementById('q2-ans').value);
+            let q2Ok = (q2Val === 9.12 || Math.abs(q2Val - 9.12) < 0.05);
+            let elQ2 = document.getElementById('q2-ans');
+            let mq2 = document.getElementById('m-q2');
+
+            if (q2Ok) {
+                elQ2.className = 'short-input correct-input';
+                mq2.innerHTML = '✔'; mq2.style.color = 'green';
+                score += 3; // 3 marks
+            } else {
+                elQ2.className = 'short-input wrong-input';
+                mq2.innerHTML = '✖'; mq2.style.color = 'red';
+            }
+
+            // (iii) Check Savings = 1600
+            let q3Val = parseInt(document.getElementById('q3-ans').value);
+            let q3Ok = (q3Val === 1600);
+            let elQ3 = document.getElementById('q3-ans');
+            let mq3 = document.getElementById('m-q3');
+
+            if (q3Ok) {
+                elQ3.className = 'short-input correct-input';
+                mq3.innerHTML = '✔'; mq3.style.color = 'green';
+                score += 2; // 2 marks
+            } else {
+                elQ3.className = 'short-input wrong-input';
+                mq3.innerHTML = '✖'; mq3.style.color = 'red';
+            }
+
+            // Score Display
+            let scoreBox = document.getElementById('scoreBox');
+            scoreBox.style.display = 'block';
+            scoreBox.innerHTML = `ලබාගත් මුළු ලකුණු සංඛ්‍යාව: <b>${score} / 10</b>`;
+
+            document.querySelectorAll('input').forEach(i => i.disabled = true);
+            document.getElementById('btnShowAns').style.display = 'inline-block';
+        }
+
+        function showCorrectAnswers() {
+            document.getElementById('x1').value = 2; document.getElementById('fx1').value = 12;
+            document.getElementById('x2').value = 4; document.getElementById('fx2').value = 40;
+            document.getElementById('x3').value = 6; document.getElementById('fx3').value = 120;
+            document.getElementById('x4').value = 8; document.getElementById('fx4').value = 64;
+            document.getElementById('x5').value = 10; document.getElementById('fx5').value = 40;
+            document.getElementById('x6').value = 12; document.getElementById('fx6').value = 0;
+            document.getElementById('x7').value = 14; document.getElementById('fx7').value = 28;
+
+            document.getElementById('sfx').value = 304;
+            document.getElementById('mean-ans').value = 6.08;
+            document.getElementById('q2-ans').value = 9.12;
+            document.getElementById('q3-ans').value = 1600;
+			
+		document.getElementById("m-q1").innerHTML="";
+		document.getElementById("m-q2").innerHTML="";	
+		document.getElementById("m-q3").innerHTML="";
+		scoreBox.innerHTML="";
+		
+			
+        }
+		
+		function res(){location.reload();}
+    </script>
+</body>
+</html>

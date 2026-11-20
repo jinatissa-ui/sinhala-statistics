@@ -1,0 +1,353 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>සංඛ්‍යානය</title>
+<script src="js/showModalDialog.js" ></script>
+<script src='js/main.js'></script>
+<link type ='text/css' rel= 'stylesheet' href='css/book.css'>
+<style>
+
+.imgbtn {
+	width:30px;
+	border:1;
+	}
+.imgbtn:hover{
+	transition: transform 0.6s;
+  	transform: scale(1.2);
+	cursor:pointer;
+	box-shadow: 2px 0px 0px 0 gold;
+	}
+
+
+</style>
+</head>
+<body onload='lod()'>
+<script>
+var bnum;
+function lod(){
+var s='';var num=18;
+bnum=num+2; 
+
+for(i=(num+1); i>2; i--){
+s +="<div id='box"+(i)+"' style=''><div  style='' class='fpage-front' id='pages1' ><p style='position:absolute;top:-5px;left:430px'><b> "+(i+(i-3))+"</b></p><object style='position:absolute;top:25px;left:30px;width:400px;height:570px;'  data='pages/page"+(i+(i-3))+".html'   ></object><center><img src='images/zoom.png' width='40px' style='position:absolute;top:570px;cursor:pointer' onclick='zoo(this)' tabIndex="+(i+(i-3))+"/></center></div><div   class='fpage-back' id='pages2' > <p  style='position:absolute;top:-5px;left:15px'><b>"+(i+(i-2))+"</b></p><object style='position:absolute;top:25px;left:20px;width:400px;height:570px;'  data='pages/page"+(i+(i-2))+".html'   ></object><center><img src='images/zoom.png' width='40px' style='position:absolute;top:570px;cursor:pointer' onclick='zoo(this)' tabIndex="+(i+(i-2))+"/></center></div></div>"
+  
+}
+
+mypag.innerHTML=s;
+
+var ar= new Array('දත්ත.','දත්ත රැස්කිරීම.','දත්ත නිරූපනය - තීර ප්‍රස්තාර.','චිත්‍ර ප්‍රස්තාර.','වට ප්‍රස්තාර.','වෘන්ත පත්‍ර.','මාතය.','මධ්‍යස්ථය.','මධ්‍යන්‍යය.','ජාලරේඛය.','සංඛ්‍යාත බහුඅස්‍ර.','චතුර්ථක.','පසුගිය විභාගවල ප්‍රශ්න.');
+var ar2= new Array(3,4,5,8,9,10,13,15,17,22,25,26,27);
+for(i=0;i<13;i++){
+cont.innerHTML+="<li style='cursor:pointer;width:320px' onmouseMove='contmove(this)' onmouseOut='contout(this)' onclick='contclick(this)' tabIndex="+(ar2[i])+" >"+ar[i]+"</li>";
+ if(document.getElementById('mobileContentsList')){
+ document.getElementById('mobileContentsList').innerHTML+="<li><button type='button' onclick='showMobilePage("+ar2[i]+")'>"+ar[i]+"</button></li>";
+ }
+}
+ fitMobilePage();
+}
+
+
+
+//--------------turn forward----
+
+var n=0;var z=0;
+function nxt(){
+snd.innerHTML="<embed src='images/flip.wav' width=0 height=0/>";
+n += 1;z += 1;
+if(n>bnum){z=z-1;
+n=bnum;snd.innerHTML="";
+}; 
+eval('box'+n).setAttribute('class','flip-next');
+eval('box'+n).style.zIndex = z;
+
+pag2.style.left =(parseFloat(pag2.style.left)- 0.5)+'px';
+pag1.style.left =(parseFloat(pag1.style.left)- 0.5)+'px';
+
+}
+
+function bac(){
+snd.innerHTML="<embed src='images/flip.wav' width=0 height=0/>";
+n-=1; 
+z += 1;
+	if(n<0){
+		n=0;z=z-1;snd.innerHTML="";
+		}
+
+eval('box'+(n+1)).setAttribute('class','flip-back');
+eval('box'+(n+1)).style.zIndex = z;
+
+pag2.style.left =(parseFloat(pag2.style.left)+ 0.5)+'px';
+pag1.style.left =(parseFloat(pag1.style.left)+ 0.5)+'px';
+
+}
+//----------last page---
+
+function last(){
+if(n==bnum){snd.innerHTML="";}else{snd.innerHTML="<embed src='images/flip2.wav' width=0 height=0/>";}
+n=(bnum);z=0;
+for(i=1;i<= (bnum);i++){
+z++;
+eval('box'+i).setAttribute('class','flip-next');
+eval('box'+i).style.zIndex=z;
+}
+
+pag2.style.left ='0px';
+pag1.style.left ='425px';
+}
+//-------- first page-----
+function first(){
+if(n==0){snd.innerHTML="";}else{snd.innerHTML="<embed src='images/flip2.wav' width=0 height=0/>";}
+n=0;z=0;
+for(i=(bnum);i>0;i--){
+z++;
+eval('box'+i).setAttribute('class','flip-back');
+eval('box'+i).style.zIndex = z;
+}
+pag2.style.left ='10px';
+pag1.style.left ='438px';
+}
+//-----------------
+function contmove(me){me.style.backgroundColor='#ddd'}
+function contout(me){me.style.backgroundColor='#fff'}
+function contclick(me){snd.innerHTML="<embed src='images/flip2.wav' width=0 height=0/>";
+var pg=parseInt(me.tabIndex/2)+1;
+var p1=parseInt(me.tabIndex/2)+1;
+var p2=bnum-(parseInt(me.tabIndex/2)+1);
+for(i=2;i<=pg;i++){z++;
+eval('box'+i).setAttribute('class','flip-next');
+eval('box'+i).style.zIndex=z;
+pag2.style.left =(parseFloat(pag2.style.left)- (0.01)*(pg))+'px';
+pag1.style.left =(parseFloat(pag1.style.left)- (0.01)*(pg))+'px';
+}
+n=i-1;
+for(k=1;k<=(bnum);k++){
+z++;
+}
+}
+//---------------zoom-
+
+function zoo(me){
+
+	  spawn(function*() {
+	    var ret = yield window.showModalDialog("pages/page"+me.tabIndex+".html",'',  "dialogTop:10px;dialogWidth:1000px;dialogHeight:620px");
+	    
+	  });
+	
+  
+}
+function lodi(){
+up.document.body.style.WebkitTransform ='scale(1.3)translate(12%,12%)';
+
+}
+function test()	{location.reload();}
+var s=0;
+function fsound2(){
+s++;if(s>1)s=0;
+if(s==1){
+snd.style.display='none';
+s2.src="images/sound1.gif ";s2.title="හඬ ඇතිව"
+}else{s2.src="images/sound2.gif ";snd.style.display='block';s2.title="හඬ නැතිව"}
+
+}
+
+var mobilePageNumber=null;
+function fitMobilePage(){
+var viewport=document.getElementById('mobilePageViewport');
+var frame=document.getElementById('mobilePageFrame');
+var cover=document.getElementById('mobileCoverPage');
+var backCover=document.getElementById('mobileBackCover');
+if(!viewport||!frame||!cover||!backCover){return;}
+var scale=Math.min(1,viewport.clientWidth/470);
+if(scale<=0){scale=1;}
+frame.style.transform='scale('+scale+')';
+cover.style.transform='scale('+scale+')';
+backCover.style.transform='scale('+scale+')';
+viewport.style.height=((mobilePageNumber===null||mobilePageNumber==='back'?360:550)*scale)+'px';
+}
+function showMobilePage(pageNumber){
+var page=parseInt(pageNumber,10);
+if(isNaN(page)||page<3||page>36){return;}
+mobilePageNumber=page;
+var frame=document.getElementById('mobilePageFrame');
+frame.src='pages/page'+page+'.html';
+frame.hidden=false;
+document.getElementById('mobileCoverPage').style.display='none';
+document.getElementById('mobileBackCover').style.display='none';
+document.getElementById('mobilePageStatus').textContent='පිටුව '+page+' / 36';
+document.getElementById('mobileBookControls').hidden=false;
+document.getElementById('mobileStart').hidden=true;
+document.querySelector('.mobile-cover-actions').hidden=true;
+document.getElementById('mobilePrevious').disabled=page<=3;
+document.getElementById('mobileNext').disabled=false;
+document.getElementById('mobileLast').disabled=page>=36;
+document.getElementById('mobileContents').hidden=true;
+document.getElementById('mobileContentsToggle').setAttribute('aria-expanded','false');
+fitMobilePage();
+}
+function showMobileBackCover(){
+mobilePageNumber='back';
+document.getElementById('mobilePageFrame').hidden=true;
+document.getElementById('mobilePageFrame').removeAttribute('src');
+document.getElementById('mobileCoverPage').style.display='none';
+var backCover=document.getElementById('mobileBackCover');
+backCover.style.display='flex';
+document.getElementById('mobilePageStatus').textContent='පොතේ පසුපස කවරය';
+document.getElementById('mobileBookControls').hidden=false;
+document.getElementById('mobileStart').hidden=true;
+document.querySelector('.mobile-cover-actions').hidden=true;
+document.getElementById('mobilePrevious').disabled=false;
+document.getElementById('mobileNext').disabled=true;
+document.getElementById('mobileLast').disabled=true;
+document.getElementById('mobileContents').hidden=true;
+document.getElementById('mobileContentsToggle').setAttribute('aria-expanded','false');
+fitMobilePage();
+}
+function showMobileCover(){
+mobilePageNumber=null;
+document.getElementById('mobilePageFrame').hidden=true;
+document.getElementById('mobilePageFrame').removeAttribute('src');
+document.getElementById('mobileBackCover').style.display='none';
+document.getElementById('mobileCoverPage').style.display='flex';
+document.getElementById('mobilePageStatus').textContent='පොතේ කවරය';
+document.getElementById('mobileBookControls').hidden=true;
+document.getElementById('mobileStart').hidden=false;
+document.querySelector('.mobile-cover-actions').hidden=false;
+document.getElementById('mobileContents').hidden=true;
+document.getElementById('mobileContentsToggle').setAttribute('aria-expanded','false');
+fitMobilePage();
+}
+function previousMobilePage(){
+if(mobilePageNumber==='back'){showMobilePage(36);}
+else if(mobilePageNumber>3){showMobilePage(mobilePageNumber-1);}
+}
+function nextMobilePage(){
+if(mobilePageNumber===36){showMobileBackCover();}
+else if(mobilePageNumber!==null&&mobilePageNumber<36){showMobilePage(mobilePageNumber+1);}
+}
+function toggleMobileContents(){
+var contents=document.getElementById('mobileContents');
+contents.hidden=!contents.hidden;
+document.getElementById('mobileContentsToggle').setAttribute('aria-expanded',String(!contents.hidden));
+document.getElementById('mobileCoverContentsToggle').setAttribute('aria-expanded',String(!contents.hidden));
+if(!contents.hidden){contents.scrollIntoView({behavior:'smooth',block:'nearest'});}
+}
+window.addEventListener('resize',fitMobilePage);
+window.addEventListener('orientationchange',fitMobilePage);
+
+</script>
+
+<center>
+<table width='945px' border=0 style=''>
+<tr><td style='padding-bottom:5px'>
+<div class="fbook" style='float:right'>
+
+<div class="" id='box45' style='box-shadow: 2px 6px 8px 0px #aaa;backface-visibility: hidden;'>
+    <div class="fpage-front" style=' background-image: -webkit-linear-gradient(left, #ccc ,#eef 10%);box-shadow: 6px 6px 8px 0 #aaa;'>
+	
+      <img src='images/pag.png' style='position:absolute;left:438px;top:6px;' id='pag1' />
+	  <div class='fpage-front' style='top:10px;width:455px;height:605px'  >
+	  
+	  <div style='position:absolute;top:110px;left:60px' >
+	 <img src=' ./images/call.jpg'  />
+	  </div>
+	  
+	  
+	  </div>
+	  
+    </div>
+    <div class="fpage-back" style='background-image:url(images/back2.jpg)' >
+     
+    </div>
+  </div>
+  
+  
+  
+  <span id='mypag'></span>
+  
+  
+<div id='box2' style=''><div  style='' class='fpage-front' id='pages1'><br>
+<font size=5 style='position:absolute;top:60px;left:150px'>පටුන</font>
+
+<ol id='cont' style='position:absolute;top:100px;left:60px;font-family:consolas;'></ol>
+</div>
+
+<div   class='fpage-back' id='pages2' >
+
+
+
+</div></div>
+
+
+  <div class="" id='box1' style='backface-visibility: hidden;box-shadow: 0 6px 8px 0 #aaa;'>
+    <div class="fpage-front" style='background-image:url(images/back.jpg)'>
+	
+     
+    </div>
+    <div class="fpage-back" style=' background-image: -webkit-linear-gradient(right, #ccc ,#eef 10%);box-shadow: 0 6px 8px 0 #aaa;' >
+	 
+	
+	<img src='images/pag.png' style='position:absolute;left:20px;top:6px;' id='pag2' /> 
+	  <div class='page-back' style='top:10px;width:455px;height:605px;left:15px'  >
+	 
+	  <p style='position:absolute;top:200px;left:80px;font-size:20px;text-align:justify;width:300px'>
+&nbsp; &nbsp; &nbsp; 6 - 11 ශ්‍රේණිවල ගණිතයට අදාළ සංඛ්‍යානය සම්බන්ධ   පාඩම්  සඳහා ක්‍රියාකාරකම් හා අභ්‍යාස ඇතුළත් කර ඇත. <br><br><br>උපාලි ජිනතිස්ස.</p>
+	  </div>
+	      
+    </div>
+  </div>
+  
+
+</td></tr>
+<tr>
+<th bgcolor='#ddf'style='padding:2px'>
+<img src='images/first.png'  class='imgbtn' onclick='first()' onmouseup='first2()' title='මුලට' />
+<img src='images/back.png' class='imgbtn' onclick='bac()' onmouseup='bac2()' title='ආපසු' /> 
+<img src='images/next.png'  class='imgbtn' onclick='nxt()'title='ඉදිරියට' />
+<img src='images/last.png'  class='imgbtn' onclick='last()' title='අගට' />
+<img src='images/first.png'  class='imgbtn' onclick='test()'title='අළුත් පොතක්' />
+<img src='images/sound2.gif' style='width:27px' onclick='fsound2()'  class='imgbtn' title='හඬ නැතිව'  id='s2'/><span id='snd' style='width:0;height:0'></span>
+</th>
+</tr>
+
+<tr><th>
+
+</th></tr></table>
+</center>
+
+<main class='mobile-reader' aria-label='සංඛ්‍යානය පොත'>
+<header class='mobile-reader-header'>
+<h1>සංඛ්‍යානය</h1>
+<p id='mobilePageStatus' aria-live='polite'>පොතේ කවරය</p>
+</header>
+<div class='mobile-page-stage'>
+<div class='mobile-page-viewport' id='mobilePageViewport'>
+<div class='mobile-cover-page' id='mobileCoverPage'>
+<img src='images/back.jpg' alt='සංඛ්‍යානය පොතේ කවරය'>
+</div>
+<div class='mobile-cover-page' id='mobileBackCover' style='display:none'>
+<img src='images/back.jpg' alt='සංඛ්‍යානය පොතේ පසුපස කවරය'>
+</div>
+<iframe class='mobile-page-frame' id='mobilePageFrame' title='පොතේ පිටුව' loading='lazy' hidden></iframe>
+</div>
+</div>
+<div class='mobile-cover-actions'>
+<button class='mobile-start-button' id='mobileStart' type='button' onclick='showMobilePage(3)'>පොත කියවමු</button>
+<button type='button' id='mobileCoverContentsToggle' onclick='toggleMobileContents()' aria-expanded='false'>පටුන</button>
+</div>
+<div class='mobile-book-controls' id='mobileBookControls' hidden>
+<button type='button' onclick='showMobileCover()'>කවරය</button>
+<button type='button' id='mobilePrevious' onclick='previousMobilePage()'>පෙර පිටුව</button>
+<button type='button' id='mobileContentsToggle' onclick='toggleMobileContents()' aria-expanded='false'>පටුන</button>
+<button type='button' id='mobileNext' onclick='nextMobilePage()'>ඊළඟ පිටුව</button>
+<button type='button' id='mobileLast' onclick='showMobilePage(36)'>අවසන් පිටුව</button>
+</div>
+<nav class='mobile-contents' id='mobileContents' aria-label='පොතේ පටුන' hidden>
+<h2>පටුන</h2>
+<ol id='mobileContentsList'></ol>
+</nav>
+</main>
+
+</body>
+</html>

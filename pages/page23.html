@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> ජාල රේඛය 02</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .container-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .freq-table {
+            border-collapse: collapse;
+            font-size: 10px;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .freq-table th {
+            background-color: #007bff;
+            color: white;
+            padding: 4px 6px;
+            border: 1px solid #0056b3;
+        }
+
+        .freq-table td {
+            padding: 3px 6px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .quiz-input {
+            width: 35px;
+            text-align: center;
+            padding: 2px;
+            font-size: 12px;
+            border: 1px solid #aaa;
+            border-radius: 3px;
+        }
+
+        .correct { background-color: #d4edda !important; border-color: #28a745 !important; }
+        .incorrect { background-color: #f8d7da !important; border-color: #dc3545 !important; }
+
+        .chart-box {
+            background-color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .clickable-bar {
+            cursor: pointer;
+            transition: fill 0.2s;
+        }
+        .clickable-bar:hover {
+            fill: #ffc107 !important;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+  <div class="page">
+    <div>
+        <!-- Header -->
+        <div class="header">
+            <h1 class="title">ජාල රේඛය ඇසුරින් වගුව පිරවීම</h1>
+        </div>
+
+        <p style="font-size: 16px; margin-bottom: 6px;">
+            <b>උපදෙස්:</b> ප්‍රස්තාරයේ තීරු මත ක්ලික් කර හෝ ප්‍රස්තාරය නිරීක්ෂණය කර වගුවේ හිස්තැන් පුරවන්න. තීරු දෙස බලා පිළිතුර නිවැරදි දැයි බලන්න.
+        </p>
+
+        <div class="container-layout">
+            <!-- SVG Histogram Diagram -->
+            <div class="chart-box">
+                <svg width="230" height="210" viewBox="0 0 230 210">
+                    <!-- Background Grid Lines -->
+                    <g stroke="#e9ecef" stroke-width="1">
+                        <line x1="30" y1="170" x2="220" y2="170" />
+                        <line x1="30" y1="140" x2="220" y2="140" />
+                        <line x1="30" y1="110" x2="220" y2="110" />
+                        <line x1="30" y1="80" x2="220" y2="80" />
+                        <line x1="30" y1="50" x2="220" y2="50" />
+                        <line x1="30" y1="20" x2="220" y2="20" />
+                    </g>
+
+                    <!-- Histogram Bars -->
+                    <!-- 0-10 (2) -->
+                    <rect class="clickable-bar" onclick="fillInput('q1', 2)" x="30" y="140" width="18" height="30" fill="#e7f1ff" stroke="#333" stroke-width="1.2" />
+                    <!-- 10-20 (4) -->
+                    <rect class="clickable-bar" onclick="fillInput('q2', 4)" x="48" y="110" width="18" height="60" fill="#e7f1ff" stroke="#333" stroke-width="1.2" />
+                    <!-- 20-30 (6) -->
+                    <rect class="clickable-bar" onclick="fillInput('q3', 6)" x="66" y="80" width="18" height="90" fill="#e7f1ff" stroke="#333" stroke-width="1.2" />
+                    <!-- 30-40 (9) -->
+                    <rect class="clickable-bar" onclick="fillInput('q4', 9)" x="84" y="35" width="18" height="135" fill="#e7f1ff" stroke="#333" stroke-width="1.2" />
+                    <!-- 40-50 (5) -->
+                    <rect class="clickable-bar" onclick="fillInput('q5', 5)" x="102" y="95" width="18" height="75" fill="#e7f1ff" stroke="#333" stroke-width="1.2" />
+                    <!-- 50-70 (4) -->
+                    <rect class="clickable-bar" onclick="fillInput('q6', 4)" x="120" y="110" width="36" height="60" fill="#e7f1ff" stroke="#333" stroke-width="1.2" />
+                    <!-- 70-100 (2) -->
+                    <rect class="clickable-bar" onclick="fillInput('q7', 2)" x="156" y="140" width="54" height="30" fill="#e7f1ff" stroke="#333" stroke-width="1.2" />
+
+                    <!-- Axes -->
+                    <line x1="30" y1="20" x2="30" y2="170" stroke="#000" stroke-width="1.5" />
+                    <line x1="30" y1="170" x2="220" y2="170" stroke="#000" stroke-width="1.5" />
+
+                    <!-- Y-Axis Labels -->
+                    <text x="25" y="173" font-size="9" text-anchor="end">0</text>
+                    <text x="25" y="143" font-size="9" text-anchor="end">2</text>
+                    <text x="25" y="113" font-size="9" text-anchor="end">4</text>
+                    <text x="25" y="83" font-size="9" text-anchor="end">6</text>
+                    <text x="25" y="53" font-size="9" text-anchor="end">8</text>
+                    <text x="25" y="23" font-size="9" text-anchor="end">10</text>
+                    <text x="12" y="95" font-size="9" text-anchor="middle" transform="rotate(-90 12 95)">ළමයින් ගණන</text>
+
+                    <!-- X-Axis Labels -->
+                    <text x="30" y="182" font-size="8" text-anchor="middle">0</text>
+                    <text x="48" y="182" font-size="8" text-anchor="middle">10</text>
+                    <text x="66" y="182" font-size="8" text-anchor="middle">20</text>
+                    <text x="84" y="182" font-size="8" text-anchor="middle">30</text>
+                    <text x="102" y="182" font-size="8" text-anchor="middle">40</text>
+                    <text x="120" y="182" font-size="8" text-anchor="middle">50</text>
+                    <text x="156" y="182" font-size="8" text-anchor="middle">70</text>
+                    <text x="210" y="182" font-size="8" text-anchor="middle">100</text>
+                    <text x="120" y="198" font-size="9" text-anchor="middle">ලබාගත් ලකුණු</text>
+                </svg>
+            </div>
+
+            <!-- Frequency Table Form -->
+            <div>
+                <table class="freq-table">
+                    <thead>
+                        <tr>
+                            <th>ලකුණු</th>
+                            <th>ළමයින් ගණන</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>0 - 10</td><td><input type="text" id="q1" class="quiz-input"></td></tr>
+                        <tr><td>10 - 20</td><td><input type="text" id="q2" class="quiz-input"></td></tr>
+                        <tr><td>20 - 30</td><td><input type="text" id="q3" class="quiz-input"></td></tr>
+                        <tr><td>30 - 40</td><td><input type="text" id="q4" class="quiz-input"></td></tr>
+                        <tr><td>40 - 50</td><td><input type="text" id="q5" class="quiz-input"></td></tr>
+                        <tr><td>50 - 70</td><td><input type="text" id="q6" class="quiz-input"></td></tr>
+                        <tr><td >70 - 100</td><td><input type="text" id="q7" class="quiz-input"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="btn-group">
+            <button class="nav-btn" onclick="checkAnswers()">පරීක්ෂා කරන්න</button>
+            <button class="nav-btn" style="background-color: #dc3545;" onclick="resetForm()">නැවත කරන්න</button>
+            
+        </div>
+	<div id="scoreDisplay" style="font-size: 14px; font-weight: bold;"></div>	
+		<span style="font-size:14px;color:blue" id="note"></span>
+    </div>
+
+    <!-- Footer -->
+    
+  </div>
+
+  <script>
+    function fillInput(id, val) {
+        document.getElementById(id).value = val;
+    }
+
+    function checkAnswers() {
+        const answers = { q1: "2", q2: "4", q3: "6", q4: "9", q5: "5", q6: "8", q7: "6" };
+        let correct = 0;
+
+        for (let i = 1; i <= 7; i++) {
+            const input = document.getElementById('q' + i);
+            if (input.value.trim() === answers['q' + i]) {
+                input.className = "quiz-input correct";
+                correct++;
+            } else {
+                input.className = "quiz-input incorrect";
+            }
+        }
+
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const percentage = Math.round((correct / 7) * 100);
+        scoreDisplay.textContent = "ලකුණු: " + percentage + "%";
+        scoreDisplay.style.color = percentage === 100 ? "#28a745" : "#dc3545";
+		
+	document.getElementById("note").innerHTML="තීරුවේ වර්ගඵලය අදාළ සංඛ්‍යාතයට සමානුපාත බව දැන ගන්න"	
+		
+    }
+
+    function resetForm() {
+        for (let i = 1; i <= 7; i++) {
+            const input = document.getElementById('q' + i);
+            input.value = "";
+            input.className = "quiz-input";
+        }
+        document.getElementById('scoreDisplay').textContent = "";
+    }
+  </script>
+</body>
+</html>

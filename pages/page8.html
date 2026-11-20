@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>සංඛ්‍යානය - පිටුව 5</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .scale-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeba2;
+            color: #856404;
+            padding: 6px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        table.picto-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+            background-color: #fff;
+        }
+
+        table.picto-table th, table.picto-table td {
+            border: 1px solid #cccccc;
+            padding: 5px;
+        }
+
+        table.picto-table th {
+            background-color: #e3f2fd;
+            color: #0d47a1;
+            text-align: center;
+        }
+
+        .cars-cell {
+            letter-spacing: 2px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .btn-action {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 3px 8px;
+            font-size: 11px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-action:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-action:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .btn-reset {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-reset:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page">
+        <div>
+            <!-- Header -->
+            <div class="header">
+                <h1 class="title">දත්ත නිරූපණය - චිත්‍ර ප්‍රස්ථාරය</h1>
+            </div>
+
+            <h2 class="subtitle">කර්මාන්තශාලාවක වසර 4 ක සෙල්ලම් කාර් නිෂ්පාදනය</h2>
+
+            <!-- Scale/Key -->
+            <div class="scale-box">
+                🔑 පරිමාණය: 🚘 එක රූපයකින් සෙල්ලම් කාර් 100 ක් නිරූපණය වේ.
+            </div>
+
+            <!-- Pictogram Table -->
+            <table class="picto-table">
+                <tr>
+                    <th style="width: 15%;">වර්ෂය</th>
+                    <th style="width: 20%;">නිෂ්පාදනය</th>
+                    <th style="width: 45%;">චිත්‍ර ප්‍රස්ථාරය</th>
+                    <th style="width: 20%;"></th>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"><b>2020</b></td>
+                    <td style="text-align: center;">1500</td>
+                    <td id="cars-2020" class="cars-cell">---</td>
+                    <td style="text-align: center;">
+                        <button id="btn-2020" class="btn-action" onclick="drawRow('2020', 15)">බලන්න</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"><b>2021</b></td>
+                    <td style="text-align: center;">1200</td>
+                    <td id="cars-2021" class="cars-cell">---</td>
+                    <td style="text-align: center;">
+                        <button id="btn-2021" class="btn-action" onclick="drawRow('2021', 12)">බලන්න</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"><b>2022</b></td>
+                    <td style="text-align: center;">1800</td>
+                    <td id="cars-2022" class="cars-cell">---</td>
+                    <td style="text-align: center;">
+                        <button id="btn-2022" class="btn-action" onclick="drawRow('2022', 18)">බලන්න</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"><b>2023</b></td>
+                    <td style="text-align: center;">1000</td>
+                    <td id="cars-2023" class="cars-cell">---</td>
+                    <td style="text-align: center;">
+                        <button id="btn-2023" class="btn-action" onclick="drawRow('2023', 10)">බලන්න</button>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Reset Button -->
+            <button class="btn-reset" onclick="resetPictogram()">🔄 නැවත සකසන්න </button>
+        </div>
+
+        <!-- Footer -->
+        
+    </div>
+
+    <script>
+        function drawRow(year, count) {
+            let carIcons = "";
+            for (let i = 0; i < count; i++) {
+                carIcons += "🚘";
+            }
+            document.getElementById(`cars-${year}`).innerText = carIcons;
+            
+            const btn = document.getElementById(`btn-${year}`);
+            btn.innerText = "✔ ";
+            btn.disabled = true;
+        }
+
+        function resetPictogram() {
+            const years = ['2020', '2021', '2022', '2023'];
+            years.forEach(year => {
+                document.getElementById(`cars-${year}`).innerText = "---";
+                const btn = document.getElementById(`btn-${year}`);
+                btn.innerText = "බලන්න";
+                btn.disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>

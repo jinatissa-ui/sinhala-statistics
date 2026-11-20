@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <title>2023 O/L - ප්‍රශ්නය 06 (පිටුව 02)</title>
+	<link rel="stylesheet" href="../css/style.css">
+	
+    <style>
+        body {
+            font-family: 'Iskoola Pota', Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background-color: #f5f5f5;
+        }
+        .paper-page888 {
+            width: 470px;
+            height: 550px;
+            background: #ffffff;
+            border: 1px solid #b2bec3;
+            padding: 8px 12px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+        .header888 {
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 2px;
+            margin-bottom: 4px;
+        }
+        .header h4 { margin: 0; font-size: 14px; }
+
+        .tbl-calc {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 3px 0;
+        }
+        .tbl-calc th, .tbl-calc td {
+            border: 1px solid #444;
+            padding: 1px 2px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .tbl-calc input {
+            width: 60px;
+            padding: 1px;
+            text-align: center;
+            font-size: 14px;
+            border: 1px solid #888;
+            border-radius: 2px;
+        }
+
+        .q-box {
+            margin: 2px 0;
+            padding: 2px 0;
+            border-bottom: 1px dashed #eee;font-size: 14px;
+        }
+        .short-input {
+            width: 50px;
+            padding: 1px;
+            text-align: center;
+            font-size: 10.5px;
+            border: 1px solid #888;
+            border-radius: 2px;
+        }
+        .text-input {
+            width: 70px;
+            padding: 1px;
+            text-align: center;
+            font-size: 12px;
+            border: 1px solid #888;
+            border-radius: 2px;
+        }
+		
+		
+		
+		
+        .mark-status {
+            font-weight: bold;
+            font-size: 10.5px;
+            margin-left: 2px;
+        }
+
+        .btn-check {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 3px 8px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .btn-show-ans {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 3px 8px;
+            font-size: 10.5px;
+            font-weight: bold;
+            border-radius: 3px;
+            cursor: pointer;
+            display: none;
+            margin-left: 5px;
+        }
+        .score-box {
+            margin-top: 3px;
+            padding: 3px;
+            background: #eef9f1;
+            border: 1px dashed #27ae60;
+            font-size: 11px;
+            font-weight: bold;
+            color: #1e8449;
+            text-align: center;
+            display: none;
+        }
+        .nav-btn {
+            float: left;
+            background: #7f8c8d;
+            color: #fff;
+            text-decoration: none;
+            padding: 2px 5px;
+            font-size: 9.5px;
+            border-radius: 3px;
+        }
+		
+	.btn-clear {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 2px 6px;
+            font-size: 12px;
+            border-radius: 3px;
+            cursor: pointer;
+        }	
+		
+		
+        .correct-input { background-color: #d4edda; border-color: #28a745; }
+        .wrong-input { background-color: #f8d7da; border-color: #dc3545; }
+    </style>
+</head>
+<body>
+
+    <div class="paper-page">
+        
+        <div class="header">
+            <h4>2023 O/L ගණිතය II - ප්‍රශ්නය 06 </h4>
+        </div>
+
+        <!-- (i) ප්‍රශ්නය -->
+        <div class="q-box">
+            <b>(i) වැඩිම සිසුන් ගණනක් අයත් පන්ති ප්‍රාන්තරය:</b> 
+            <input type="text" id="q1-ans" class="text-input" placeholder="උදා: 1-2">
+            <span id="m-q1" class="mark-status"></span>
+        </div>
+
+        <!-- වගුව පූරණය -->
+        <p style="margin: 1px 0; font-weight: bold; font-size: 14px;">(ii) ගණනය කිරීම් වගුව (x සහ fx පුරවන්න):</p>
+        <table class="tbl-calc">
+            <tr style="background-color: #f2f2f2;">
+                <th>පන්ති ප්‍රාන්තරය</th>
+                <th>x</th>
+                <th>f</th>
+                <th>fx</th>
+            </tr>
+            <tr><td>40 – 44</td><td><input type="number" id="x-1"></td><td>3</td><td><input   type="number" id="fx-1"></td></tr>
+            <tr><td>44 – 48</td><td><input  type="number" id="x-2" ></td><td>5</td><td><input type="number" id="fx-2"></td></tr>
+            <tr><td>48 – 52</td><td><input type="number" id="x-3"></td><td>9</td><td><input type="number" id="fx-3"></td></tr>
+            <tr><td>52 – 56</td><td><input type="number" id="x-4"></td><td>11</td><td><input type="number" id="fx-4"></td></tr>
+            <tr><td>56 – 60</td><td><input type="number" id="x-5"></td><td>7</td><td><input type="number" id="fx-5"></td></tr>
+            <tr><td>60 – 64</td><td><input type="number" id="x-6"></td><td>3</td><td><input type="number" id="fx-6"></td></tr>
+            <tr><td>64 – 68</td><td><input type="number" id="x-7"></td><td>2</td><td><input type="number" id="fx-7"></td></tr>
+            <tr style="font-weight: bold; background-color: #fafafa;">
+                <td>එකතුව</td>
+                <td>-</td>
+                <td>Σf = 40</td>
+                <td>Σfx = <input type="number" id="sum-fx" style="width: 60px;"> <span id="m-tbl" class="mark-status"></span></td>
+            </tr>
+        </table>
+
+        <div class="q-box">
+            <b>මධ්‍යන්‍ය ස්කන්ධය:</b>
+            (ආසන්න පූර්ණ සංඛ්‍යාව )
+            <input type="number" id="q2-ans" class="short-input" placeholder=""> kg
+            <span id="m-q2" class="mark-status"></span>
+        </div>
+
+        <div class="q-box">
+            <b>(iii) ඒ ඇසුරෙන් ගමන් කළ හැකි වැඩිම සිසුන් ගණන:</b>
+            
+            <input type="number" id="q3-ans" class="short-input" placeholder="">
+            <span id="m-q3" class="mark-status"></span>
+        </div>
+
+        <div class="q-box">
+            <b>(iv)  ගෙන යා හැකි උපරිම සිසුන් සංඛ්‍යාව:</b>
+            <input type="number" id="q4-ans" class="short-input" placeholder="">
+            <span id="m-q4" class="mark-status"></span>
+        </div>
+
+        <div style="text-align: center; margin-top: 3px;">
+            <button id="btnCheck" class="btn-check" onclick="checkAndScore()"> පිළිතුරු පරීක්ෂා කරන්න</button>
+            <button id="btnShowAns" class="btn-show-ans" onclick="showCorrectAnswers()"> නිවැරදි පිළිතුරු</button>
+			<button id="btnClearAll" class="btn-clear" style="background-color: #c0392b;" onclick="res()"> නැවතත්</button>
+        </div>
+
+        <div id="scoreBox" class="score-box"></div>
+    </div>
+
+    <script>
+        function setMark(elementId, statusId, isCorrect) {
+            let el = document.getElementById(elementId);
+            let st = document.getElementById(statusId);
+            if (!el) return;
+            if (isCorrect) {
+                el.className = 'correct-input';
+                if(st) { st.innerHTML = '✔'; st.style.color = 'green'; }
+            } else {
+                el.className = 'wrong-input';
+                if(st) { st.innerHTML = '✖'; st.style.color = 'red'; }
+            }
+        }
+
+        function checkAndScore() {
+            let score = 0;
+
+            // (i) Check Modal Class
+            let q1Val = document.getElementById('q1-ans').value.trim().replace(/\s+/g, '');
+            let q1Ok = (q1Val === '52-56' || q1Val === '52–56');
+            setMark('q1-ans', 'm-q1', q1Ok);
+            if (q1Ok) score += 1;
+
+            // (ii) Table Checking
+            let xOk = (parseInt(document.getElementById('x-1').value) === 42) &&
+                      (parseInt(document.getElementById('x-2').value) === 46) &&
+                      (parseInt(document.getElementById('x-3').value) === 50) &&
+                      (parseInt(document.getElementById('x-4').value) === 54) &&
+                      (parseInt(document.getElementById('x-5').value) === 58) &&
+                      (parseInt(document.getElementById('x-6').value) === 62) &&
+                      (parseInt(document.getElementById('x-7').value) === 66);
+
+            let fxOk = (parseInt(document.getElementById('fx-1').value) === 126) &&
+                       (parseInt(document.getElementById('fx-2').value) === 230) &&
+                       (parseInt(document.getElementById('fx-3').value) === 450) &&
+                       (parseInt(document.getElementById('fx-4').value) === 594) &&
+                       (parseInt(document.getElementById('fx-5').value) === 406) &&
+                       (parseInt(document.getElementById('fx-6').value) === 186) &&
+                       (parseInt(document.getElementById('fx-7').value) === 132);
+
+            let sumFxOk = parseInt(document.getElementById('sum-fx').value) === 2124;
+
+            setMark('sum-fx', 'm-tbl', sumFxOk);
+            if (xOk) score += 1;
+            if (fxOk) score += 2;
+            if (sumFxOk) score += 1;
+
+            // Mean Checks (1 mark for 53.1 / 2124/40 and 1 mark for rounded 53 kg)
+            let meanAnsOk = parseInt(document.getElementById('q2-ans').value) === 53;
+            setMark('q2-ans', 'm-q2', meanAnsOk);
+            if (meanAnsOk) score += 2; // includes division & rounding mark
+
+            // (iii) 600 / 53 ≈ 11
+            let q3Ok = parseInt(document.getElementById('q3-ans').value) === 11;
+            setMark('q3-ans', 'm-q3', q3Ok);
+            if (q3Ok) score += 1;
+
+            // (iv) Maximum students = 13 (3 + 5 + 5)
+            let q4Ok = parseInt(document.getElementById('q4-ans').value) === 13;
+            setMark('q4-ans', 'm-q4', q4Ok);
+            if (q4Ok) score += 2;
+
+            // Score Display & Controls Lock
+            let scoreBox = document.getElementById('scoreBox');
+            scoreBox.style.display = 'block';
+            scoreBox.innerHTML = `ලබාගත් මුළු ලකුණු සංඛ්‍යාව: <b>${score} / 10</b>`;
+
+            document.querySelectorAll('input').forEach(i => i.disabled = true);
+            document.getElementById('btnShowAns').style.display = 'inline-block';
+        }
+
+        function showCorrectAnswers() {
+			
+		
+		
+		
+            document.getElementById('q1-ans').value = '52-56';
+
+            document.getElementById('x-1').value = 42;
+            document.getElementById('x-2').value = 46;
+            document.getElementById('x-3').value = 50;
+            document.getElementById('x-4').value = 54;
+            document.getElementById('x-5').value = 58;
+            document.getElementById('x-6').value = 62;
+            document.getElementById('x-7').value = 66;
+
+            document.getElementById('fx-1').value = 126;
+            document.getElementById('fx-2').value = 230;
+            document.getElementById('fx-3').value = 450;
+            document.getElementById('fx-4').value = 594;
+            document.getElementById('fx-5').value = 406;
+            document.getElementById('fx-6').value = 186;
+            document.getElementById('fx-7').value = 132;
+
+            document.getElementById('sum-fx').value = 2124;
+            
+            document.getElementById('q2-ans').value = 53;
+           
+            document.getElementById('q3-ans').value = 11;
+            document.getElementById('q4-ans').value = 13;
+			
+	document.getElementById('m-q1').innerHTML = "";		
+	document.getElementById('m-q2').innerHTML = "";			
+	document.getElementById('m-q3').innerHTML = "";	
+	document.getElementById('m-q4').innerHTML = "";	
+	document.getElementById('m-tbl').innerHTML = ""; scoreBox.innerHTML = "";
+	
+        }
+		
+		function res(){location.reload();}
+		
+		
+    </script>
+</body>
+</html>

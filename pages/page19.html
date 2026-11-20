@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>පන්ති ප්‍රාන්තර යොදා මධ්‍යන්‍යය සෙවීම</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  /* මෙම පිටුවට අදාළ විශේෂිත styling */
+  .instructions {
+    color: #d9534f;
+    font-size: 16px;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .number-box {
+    background: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 6px;
+    min-height: 32px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .num-badge {
+    background-color: #007bff;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    user-select: none;
+    transition: 0.2s;
+  }
+
+  .num-badge:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+
+  /* Table design */
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  table.data-table th, table.data-table td {
+    border: 1px solid #bbb;
+    padding: 3px 4px;
+    text-align: center;
+  }
+
+  table.data-table th {
+    background-color: #f1f3f5;
+  }
+
+  .highlight-um {
+    background-color: #ffcccc !important;
+  }
+
+  .btn {
+    background: #007bff;
+    color: white;
+    padding: 4px 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+
+  .ans-box {
+    font-size: 16px;
+    background: #eef9ff;
+    border-left: 3px solid #007bff;
+    padding: 6px;
+    margin-top: 6px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .calc-table {
+    display: inline-table;
+    vertical-align: middle;
+    margin: 2px 0;
+    font-size: 16px;
+  }
+
+  .calc-table td {
+    padding: 0 4px;
+  }
+
+  .border-bottom {
+    border-bottom: 1px solid #333 !important;
+  }
+</style>
+</head>
+<body>
+
+  <div class="page">
+    <div>
+      <!-- Header -->
+      <div class="header">
+        <h1 class="title">පන්ති ප්‍රාන්තර යොදා මධ්‍යන්‍යය සෙවීම</h1>
+      </div>
+
+      <p class="instructions">අගයන් මත ක්ලික් කරමින් වගුව පුරවන්න. (සිසුන් <span id="sn">10</span> දෙනෙකුගේ ලකුණු)</p>
+
+      <!-- Numbers Display -->
+      <div id="box" class="number-box"></div>
+
+      <!-- Controls -->
+      <div style="font-size: 11.5px; margin-bottom: 6px;">
+        <button onclick="nxt()" id="but" class="btn" disabled>ඊළඟ ප්‍රශ්නය</button> 
+        <span style="font-size:16px" >&nbsp;උපකල්පිත මධ්‍යන්‍යය  = </span><span id="um" style="padding:2px 6px; background:#fbb; font-weight:bold; border-radius:3px;font-size:16px">50</span>
+      </div>
+
+      <!-- Main Table -->
+      <div id="box2"></div>
+
+      <!-- Change Assumed Mean Section -->
+      <div id="umnxt" style="display:none; font-size:11px; margin-top:6px; background:#f8f9fa; padding:4px; border-radius:4px;"><span style="font-size:16px">
+        වෙනත් උපකල්පිත මධ්‍යන්‍යයක් තෝරන්න:</span>
+        <select id="sel" onchange="chang()" disabled style="font-size:11px;">
+          <option value="30">30</option>
+          <option value="50" selected>50</option>
+          <option value="70">70</option>
+        </select>
+      </div>
+
+      <!-- Answer / Calculation display -->
+      <div id="ans"></div>
+    </div>
+
+    <!-- Footer -->
+    
+  </div>
+
+<span id="txt" style="display:none"></span>
+
+<script>
+var fn = 10;
+var tn = 5;
+var count = 0;
+var qn = 0;
+
+window.onload = function() {
+  initGame();
+};
+
+function initGame() {
+  var sel = document.getElementById('sel');
+  var um = document.getElementById('um');
+  var box = document.getElementById('box');
+  var box2 = document.getElementById('box2');
+  var sn = document.getElementById('sn');
+  
+  sel.value = "50";
+  um.innerHTML = sel.value;
+  box.innerHTML = "";
+  
+  sn.innerHTML = fn;
+  
+  // Random Numbers Generator
+  for (var i = 0; i < fn; i++) {
+    var val = Math.floor(Math.random() * 100);
+    box.innerHTML += "<span class='num-badge' onclick='num(this)'>" + val + "</span>";
+  }
+
+  renderTable();
+}
+
+function renderTable() {
+  var selVal = Number(document.getElementById('sel').value);
+  var tab = "<table class='data-table' id='tabl'><tr><th>පන්ති ප්‍රාන්තර</th><th>f</th><th>x</th><th>අපගමනය (d)</th><th>fd</th></tr>";
+
+  for (var i = 0; i < tn; i++) {
+    var min = i * tn * 4;
+    var max = (i + 1) * tn * 4;
+    var x = (min + max) / 2;
+    var d = x - selVal;
+    var highlightClass = (x === selVal) ? "class='highlight-um'" : "";
+
+    tab += "<tr>" +
+             "<td>" + min + " - " + max + "</td>" +
+             "<td id='f" + i + "'>0</td>" +
+             "<td id='x" + i + "' " + highlightClass + " title='(" + min + "+" + max + ")/2'>" + x + "</td>" +
+             "<td id='d" + i + "'>" + d + "</td>" +
+             "<td id='fd" + i + "'>0</td>" +
+           "</tr>";
+  }
+
+  tab += "<tr><th>එකතුව (&sum;)</th><th id='totf'>0</th><th>-</th><th>-</th><th id='total'>0</th></tr></table>";
+  document.getElementById('box2').innerHTML = tab;
+}
+
+function num(me) {
+  count++;
+  var val = Number(me.innerHTML);
+  var n = Math.floor(val / 20);
+  if (n >= tn) n = tn - 1; // Safeguard bounds
+
+  me.style.visibility = 'hidden'; // Hide clicked number visually
+
+  var fElem = document.getElementById('f' + n);
+  var fdElem = document.getElementById('fd' + n);
+  var dElem = document.getElementById('d' + n);
+
+  var currentF = Number(fElem.innerHTML) + 1;
+  fElem.innerHTML = currentF;
+  fdElem.innerHTML = currentF * Number(dElem.innerHTML);
+
+  // Recalculate Totals
+  var tt = 0;
+  var ttt = 0;
+  for (var i = 0; i < tn; i++) {
+    tt += Number(document.getElementById('f' + i).innerHTML);
+    ttt += Number(document.getElementById('fd' + i).innerHTML);
+  }
+
+  document.getElementById('totf').innerHTML = tt;
+  document.getElementById('total').innerHTML = ttt;
+
+  // Check if complete
+  if (count >= fn) {
+    showResults(tt, ttt);
+    document.getElementById('box').style.display = 'none';
+    document.getElementById('but').disabled = false;
+    document.getElementById('sel').disabled = false;
+    document.getElementById('umnxt').style.display = 'block';
+  }
+}
+
+function showResults(tt, ttt) {
+  var selVal = Number(document.getElementById('sel').value);
+  var devMean = (ttt / tt).toFixed(2);
+  var realMean = (Number(devMean) + selVal).toFixed(2);
+
+  var ansHTML = "<div class='ans-box'>" +
+    "&sum;f = <b>" + tt + "</b> &nbsp; &nbsp; &nbsp; &sum;fd = <b>" + ttt + "</b><br>" +
+    "අපගමන මධ්‍යන්‍යය  = &sum;fd &#247; &sum;f = " + ttt + " &#247; " + tt + " = <b>" + devMean + "</b><br>" +
+    "සැබෑ මධ්‍යන්‍යය =  " + selVal + " + (" + devMean + ") = <b style='border-bottom: 2px double #000;'>" + realMean + "</b>" +
+    "</div>";
+
+  document.getElementById('ans').innerHTML = ansHTML;
+}
+
+function nxt() {
+  document.getElementById('but').disabled = true;
+  document.getElementById('sel').disabled = true;
+  document.getElementById('umnxt').style.display = 'none';
+  document.getElementById('box').style.display = 'flex';
+  
+  qn++;
+  if (qn >= 2) { fn = 15; }
+  if (qn >= 4) { fn = 20; }
+  
+  document.getElementById('ans').innerHTML = "";
+  count = 0;
+  
+  initGame();
+}
+
+function chang() {
+  var selVal = Number(document.getElementById('sel').value);
+  document.getElementById('um').innerHTML = selVal;
+
+  var tt = 0;
+  var ttt = 0;
+
+  for (var i = 0; i < tn; i++) {
+    var x = Number(document.getElementById('x' + i).innerHTML);
+    var d = x - selVal;
+    document.getElementById('d' + i).innerHTML = d;
+    
+    var f = Number(document.getElementById('f' + i).innerHTML);
+    var fd = f * d;
+    document.getElementById('fd' + i).innerHTML = fd;
+
+    tt += f;
+    ttt += fd;
+
+    // Highlight row matching Assumed Mean
+    if (x === selVal) {
+      document.getElementById('x' + i).className = 'highlight-um';
+    } else {
+      document.getElementById('x' + i).className = '';
+    }
+  }
+
+  document.getElementById('totf').innerHTML = tt;
+  document.getElementById('total').innerHTML = ttt;
+
+  showResults(tt, ttt);
+}
+</script>
+
+</body>
+</html>

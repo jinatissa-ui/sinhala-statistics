@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <title>2024 O/L ගණිතය - ප්‍රශ්නය 04</title>
+	 <link rel="stylesheet" href="../css/style.css">
+	
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background-color: #f5f5f5;
+        }
+        .paper-page1 {
+            width: 470px;
+            height: 550px;
+            background: #ffffff;
+            border: 1px solid #7f8c8d;
+            padding: 10px 12px;
+            box-sizing: border-box;
+            margin: 0 auto;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+        .header1 {
+            text-align: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 2px;
+            margin-bottom: 6px;
+        }
+        .header h3 { margin: 0; font-size: 12px; }
+
+        /* Top Grid Layout for Table and Graph */
+        .content-grid {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        /* Table Styling */
+        .tbl-box {
+            width: 40%;
+        }
+        .tbl-data {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        .tbl-data th, .tbl-data td {
+            border: 1px solid #000;
+            padding: 3px 2px;
+            font-size: 10px;
+        }
+        .tbl-data th {
+            background-color: #f2f2f2;
+        }
+
+        /* SVG Graph Area */
+        .graph-box {
+            width: 58%;
+            text-align: center;
+        }
+        svg {
+            background-color: #fff;
+            border: 1px solid #000;
+        }
+        .grid-line { stroke: #dcdde1; stroke-width: 0.8; }
+        .axis-line { stroke: #000; stroke-width: 1.5; }
+        .polygon-line { stroke: #000; stroke-width: 1.5; fill: none; }
+        .point-dot { fill: #000; r: 2.5; }
+
+        /* Sub Questions */
+        .sub-questions p {
+            margin: 3px 0;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page">
+        <!-- ප්‍රශ්න ශීර්ෂය -->
+        <div class="header">
+            <h3>අ.පො.ස. (සාමාන්‍ය පෙළ) - 2024 | ගණිතය  B කොටස  ප්‍රශ්න අංක 4 </h3>
+        </div>
+
+        <div style="font-size:14px">
+            <b>4.</b> පරීක්ෂණයකදී සිසුන් සමූහයක් ලබාගත් ලකුණු ඇසුරෙන් අඳින ලද සංඛ්‍යාත බහුඅස්‍රයක් ද අසම්පූර්ණ සමුච්චිත සංඛ්‍යාත වගුවක් ද පහත දැක්වේ. මෙම වගුවෙහි 10 – 20 ප්‍රාන්තරයෙන් දැක්වෙන්නේ 10 හෝ 10 ට වැඩි සහ 20 ට අඩු යන්නයි.
+        </div>
+
+        <!-- වගුව සහ සංඛ්‍යාත බහුඅස්‍රය එක ළඟ -->
+        <div class="content-grid">
+            
+            <!-- වගුව -->
+            <div class="tbl-box">
+                <table class="tbl-data">
+                    <tr>
+                        <th>ලකුණු</th>
+                        <th>සිසුන් <br>සංඛ්‍යාව</th>
+                        <th>සමුච්චිත<br> සංඛ්‍යාතය</th>
+                    </tr>
+                    <tr>
+                        <td>10 – 20</td>
+                        <td>20</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td>20 – 30</td>
+                        <td>......</td>
+                        <td>......</td>
+                    </tr>
+                    <tr>
+                        <td>30 – 50</td>
+                        <td>60</td>
+                        <td>......</td>
+                    </tr>
+                    <tr>
+                        <td>50 – 60</td>
+                        <td>......</td>
+                        <td>......</td>
+                    </tr>
+                    <tr>
+                        <td>60 – 90</td>
+                        <td>......</td>
+                        <td>......</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- ජාල රේඛය / සංඛ්‍යාත බහුඅස්‍රය (SVG) -->
+            <div class="graph-box">
+                <div style="font-weight: bold; font-size: 10px; margin-bottom: 2px;">සිසුන් සංඛ්‍යාව</div>
+                <svg width="210" height="180" viewBox="0 0 250 180"   ><g  >
+                    <!-- Y Axis Grid Lines & Labels -->
+                    <line class="grid-line" x1="25" y1="20" x2="235" y2="20" /><text x="8" y="23" font-size="8">90</text>
+                    <line class="grid-line" x1="25" y1="35" x2="235" y2="35" /><text x="8" y="38" font-size="8">80</text>
+                    <line class="grid-line" x1="25" y1="50" x2="235" y2="50" /><text x="8" y="53" font-size="8">70</text>
+                    <line class="grid-line" x1="25" y1="65" x2="235" y2="65" /><text x="8" y="68" font-size="8">60</text>
+                    <line class="grid-line" x1="25" y1="80" x2="235" y2="80" /><text x="8" y="83" font-size="8">50</text>
+                    <line class="grid-line" x1="25" y1="95" x2="235" y2="95" /><text x="8" y="98" font-size="8">40</text>
+                    <line class="grid-line" x1="25" y1="110" x2="235" y2="110" /><text x="8" y="113" font-size="8">30</text>
+                    <line class="grid-line" x1="25" y1="125" x2="235" y2="125" /><text x="8" y="128" font-size="8">20</text>
+                    <line class="grid-line" x1="25" y1="140" x2="235" y2="140" /><text x="8" y="143" font-size="8">10</text>
+
+                    <!-- X Axis Grid Lines & Labels -->
+                    <line class="grid-line" x1="25" y1="10" x2="25" y2="150" /><text x="22" y="160" font-size="8">0</text>
+                    <line class="grid-line" x1="46" y1="10" x2="46" y2="150" /><text x="41" y="160" font-size="8">10</text>
+                    <line class="grid-line" x1="67" y1="10" x2="67" y2="150" /><text x="62" y="160" font-size="8">20</text>
+                    <line class="grid-line" x1="88" y1="10" x2="88" y2="150" /><text x="83" y="160" font-size="8">30</text>
+                    <line class="grid-line" x1="109" y1="10" x2="109" y2="150" /><text x="104" y="160" font-size="8">40</text>
+                    <line class="grid-line" x1="130" y1="10" x2="130" y2="150" /><text x="125" y="160" font-size="8">50</text>
+                    <line class="grid-line" x1="151" y1="10" x2="151" y2="150" /><text x="146" y="160" font-size="8">60</text>
+                    <line class="grid-line" x1="172" y1="10" x2="172" y2="150" /><text x="167" y="160" font-size="8">70</text>
+                    <line class="grid-line" x1="193" y1="10" x2="193" y2="150" /><text x="188" y="160" font-size="8">80</text>
+                    <line class="grid-line" x1="214" y1="10" x2="214" y2="150" /><text x="209" y="160" font-size="8">90</text>
+                    <line class="grid-line" x1="235" y1="10" x2="235" y2="150" /><text x="228" y="160" font-size="8">100</text>
+
+                    <!-- Axes Lines -->
+                    <line class="axis-line" x1="25" y1="10" x2="25" y2="150" />
+                    <line class="axis-line" x1="25" y1="150" x2="238" y2="150" />
+
+                    <!-- Frequency Polygon Line & Points -->
+                    <polyline class="polygon-line" points="35.5,150 56.5,125 77.5,95 98.5,110 119.5,110 140.5,50 161.5,125 182.5,125 203.5,125 224.5,150" />
+                    
+                    <circle class="point-dot" cx="35.5" cy="150" />
+                    <circle class="point-dot" cx="56.5" cy="125" />
+                    <circle class="point-dot" cx="77.5" cy="95" />
+                    <circle class="point-dot" cx="98.5" cy="110" />
+                    <circle class="point-dot" cx="119.5" cy="110" />
+                    <circle class="point-dot" cx="140.5" cy="50" />
+                    <circle class="point-dot" cx="161.5" cy="125" />
+                    <circle class="point-dot" cx="182.5" cy="125" />
+                    <circle class="point-dot" cx="203.5" cy="125" />
+                    <circle class="point-dot" cx="224.5" cy="150" />
+					
+					</g>
+                </svg>
+                <div style="font-weight: bold; font-size: 10px; text-align: right; margin-right: 5px;">ලකුණු ➔</div>
+            </div>
+
+        </div>
+
+        <!-- ප්‍රශ්න කොටස් (i - iv) -->
+        <div class="sub-questions">
+            <p><b>(i)</b> සංඛ්‍යාත බහුඅස්‍රයට අනුව වගුවේ සිසුන් සංඛ්‍යාව දැක්වෙන තීරයේ හිස්තැන් සම්පූර්ණ කරන්න.</p>
+            <p><b>(ii)</b> දී ඇති සංඛ්‍යාත බහුඅස්‍රය මත මෙම ලකුණුවලට අදාළ ජාල රේඛය අඳින්න.</p>
+            <p><b>(iii)</b> වගුවෙහි සමුච්චිත සංඛ්‍යාත තීරය සම්පූර්ණ කරන්න.</p>
+            <p><b>(iv)</b> මෙම සිසුන් සමූහයෙන් අහඹු ලෙස තෝරාගත් සිසුවකු ලකුණු 50 ක් හෝ ඊට වඩා වැඩියෙන් ලබාගත් අයකු වීමේ සම්භාවිතාව සොයන්න.</p>
+        </div>
+    </div>
+
+</body>
+</html>

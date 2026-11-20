@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>මධ්‍යන්‍යය - අවසන් අභ්‍යාසය</title>
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .instructions {
+    color: #d9534f;
+    font-size: 16px;
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+
+  .problem-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    padding: 4px 6px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+  }
+
+  /* Compact Table Input Styling */
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 2px;
+  }
+
+  table.data-table th, table.data-table td {
+    border: 1px solid #bbb;
+    padding: 2px 3px;
+    text-align: center;
+  }
+
+  table.data-table th {
+    background-color: #e9ecef;
+  }
+
+  .num-input {
+    width: 42px;
+    text-align: center;
+    font-size: 14px;
+    padding: 1px;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+  }
+
+  .num-input:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: #f0f8ff;
+  }
+
+  .correct {
+    background-color: #d4edda !important;
+    border-color: #28a745 !important;
+    color: #155724;
+  }
+
+  .incorrect {
+    background-color: #f8d7da !important;
+    border-color: #dc3545 !important;
+    color: #721c24;
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 6px;
+    margin-top: 5px;
+  }
+
+  .btn {
+    background: #007bff;
+    color: white;
+    padding: 4px 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .btn:hover { background: #0056b3; }
+  .btn-next { background: #28a745; }
+  .btn-next:hover { background: #218838; }
+
+  .score-box {
+    font-size: 16px;
+    font-weight: bold;
+    color: #dc3545; /* රතු පාටින් ලකුණු % */
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .calc-box {
+    background: #f8f9fa;
+    padding: 5px 7px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+  <div class="page">
+    <div>
+      <!-- Header -->
+      <div class="header">
+        <h1 class="title">මධ්‍යන්‍යය -  අභ්‍යාසය</h1>
+      </div>
+
+      <p class="instructions">හිස්තැන් නිවැරදිව පුරවා අවසන් පිළිතුරු දෙක ආසන්න පළමු දශමස්ථානයට සකස් කරන්න.</p>
+
+      <!-- Problem Scenario -->
+      <div id="prob-title" class="problem-title"></div>
+
+      <!-- Main Table -->
+      <div id="table-container"></div>
+
+      <!-- Simplified Final Mean Calculation Section -->
+      <div class="calc-box">
+        උපකල්පිත මධ්‍යන්‍යය  = <b id="disp-A"></b><br>
+        අපගමන මධ්‍යන්‍යය  = 
+        <input type="text" id="ans-devmean" class="num-input" style="width:50px;" ><br><br>
+        <b>සැබෑ මධ්‍යන්‍යය = </b> 
+        <input type="text" id="ans-final" class="num-input" style="width:55px;" >
+      </div>
+
+      <!-- Action Buttons & Score -->
+      <div class="btn-group">
+        <button class="btn" onclick="checkAnswers()">පිළිතුරු පරීක්ෂා කරන්න</button>
+        <button class="btn btn-next" onclick="nextQuestion()">ඊළඟ ගැටලුව ➔</button>
+      </div>
+
+      <div id="score-display" class="score-box"></div>
+    </div>
+
+    <!-- Footer -->
+    
+  </div>
+
+<script>
+// උදාහරණ 5ක Array එක
+var problems = [
+  {
+    title: "1. පොල් ගස් 8ක ලබාගත් පොල් ගෙඩි ගණන පිළිබඳ තොරතුරු:",
+    intervals: ["10 - 20", "20 - 30", "30 - 40", "40 - 50"],
+    frequencies: [1, 3, 3, 1],
+    assumedMean: 25
+  },
+  {
+    title: "2. මිදි කිලෝග්‍රෑම් 12ක තිබූ මිදි ගෙඩි ගණන පිළිබඳ තොරතුරු:",
+    intervals: ["40 - 50", "50 - 60", "60 - 70", "70 - 80"],
+    frequencies: [2, 5, 3, 2],
+    assumedMean: 55
+  },
+  {
+    title: "3. වෙළඳසැල් 15ක තිබූ හාල් මිටි ගණන පිළිබඳ තොරතුරු:",
+    intervals: ["5 - 15", "15 - 25", "25 - 35", "35 - 45"],
+    frequencies: [3, 6, 4, 2],
+    assumedMean: 20
+  },
+  {
+    title: "4. දින 20කදී කඩයක විකුණුන සීනි කිලෝග්‍රෑම් ගණන පිළිබඳ තොරතුරු:",
+    intervals: ["20 - 30", "30 - 40", "40 - 50", "50 - 60"],
+    frequencies: [4, 8, 5, 3],
+    assumedMean: 35
+  },
+  {
+    title: "5. සිසුන් 25 දෙනෙකු ගණිතය විෂයට ගත් ලකුණු පිළිබඳ තොරතුරු:",
+    intervals: ["0 - 20", "20 - 40", "40 - 60", "60 - 80", "80 - 100"],
+    frequencies: [3, 6, 8, 5, 3],
+    assumedMean: 50
+  }
+];
+
+var currentIdx = 0;
+
+window.onload = function() {
+  loadQuestion(currentIdx);
+};
+
+function loadQuestion(idx) {
+  var p = problems[idx];
+  document.getElementById("prob-title").innerHTML = p.title;
+  document.getElementById("disp-A").innerHTML = p.assumedMean;
+  document.getElementById("score-display").innerHTML = "";
+
+  // Reset inputs
+  document.getElementById("ans-devmean").value = "";
+  document.getElementById("ans-final").value = "";
+  document.getElementById("ans-devmean").className = "num-input";
+  document.getElementById("ans-final").className = "num-input";
+
+  var html = "<table class='data-table'><tr>" +
+             "<th>පන්ති ප්‍රාන්තර</th><th>f</th><th>මධ්‍ය අගය (x)</th><th>අපගමනය(d)</th><th>fd</th>" +
+             "</tr>";
+
+  for (var i = 0; i < p.intervals.length; i++) {
+    html += "<tr>" +
+              "<td>" + p.intervals[i] + "</td>" +
+              "<td>" + p.frequencies[i] + "</td>" +
+              "<td><input type='text' id='x_" + i + "' class='num-input'></td>" +
+              "<td><input type='text' id='d_" + i + "' class='num-input'></td>" +
+              "<td><input type='text' id='fd_" + i + "' class='num-input'></td>" +
+            "</tr>";
+  }
+
+  html += "<tr>" +
+            "<th>එකතුව (&sum;)</th>" +
+            "<th><input type='text' id='tot_f' class='num-input'></th>" +
+            "<th>-</th><th>-</th>" +
+            "<th><input type='text' id='tot_fd' class='num-input'></th>" +
+          "</tr></table>";
+
+  document.getElementById("table-container").innerHTML = html;
+}
+
+function checkAnswers() {
+  var p = problems[currentIdx];
+  var totalInputs = 0;
+  var correctInputs = 0;
+
+  var sumF = 0;
+  var sumFD = 0;
+
+  // Verify Table Values
+  for (var i = 0; i < p.intervals.length; i++) {
+    var bounds = p.intervals[i].split("-").map(Number);
+    var midX = (bounds[0] + bounds[1]) / 2;
+    var devD = midX - p.assumedMean;
+    var prodFD = p.frequencies[i] * devD;
+
+    sumF += p.frequencies[i];
+    sumFD += prodFD;
+
+    // Check Midpoint (x)
+    totalInputs++;
+    if (validateInput("x_" + i, midX)) correctInputs++;
+
+    // Check Deviation (d)
+    totalInputs++;
+    if (validateInput("d_" + i, devD)) correctInputs++;
+
+    // Check Product (fd)
+    totalInputs++;
+    if (validateInput("fd_" + i, prodFD)) correctInputs++;
+  }
+
+  // Check Totals
+  totalInputs++;
+  if (validateInput("tot_f", sumF)) correctInputs++;
+
+  totalInputs++;
+  if (validateInput("tot_fd", sumFD)) correctInputs++;
+
+  // Check Deviation Mean (d̅ = ∑fd / ∑f) - Rounded to 1 or 2 decimals tolerance
+  var devMean = (sumFD / sumF).toFixed(1);
+  totalInputs++;
+  if (validateInput("ans-devmean", devMean)) correctInputs++;
+
+  // Check Final Mean (A + d̅) - Rounded to 1 decimal place
+  var realMean = (p.assumedMean + (sumFD / sumF)).toFixed(1);
+  totalInputs++;
+  if (validateInput("ans-final", realMean)) correctInputs++;
+
+  // Calculate Percentage Score
+  var percentage = Math.round((correctInputs / totalInputs) * 100);
+  document.getElementById("score-display").innerHTML = 
+    "ලකුණු: <span style='font-size:16px;'>" + percentage + "%</span> (" + correctInputs + "/" + totalInputs + " නිවැරදියි)";
+}
+
+function validateInput(id, expectedValue) {
+  var elem = document.getElementById(id);
+  var val = parseFloat(elem.value.trim());
+
+  if (!isNaN(val) && Math.abs(val - expectedValue) < 0.15) {
+    elem.className = "num-input correct";
+    return true;
+  } else {
+    elem.className = "num-input incorrect";
+    return false;
+  }
+}
+
+function nextQuestion() {
+  currentIdx = (currentIdx + 1) % problems.length;
+  loadQuestion(currentIdx);
+}
+</script>
+
+</body>
+</html>

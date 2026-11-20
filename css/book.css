@@ -1,0 +1,239 @@
+
+.fbook {
+  	background-color: transparent;
+  	width: 470px;
+  	height: 620px;
+  	perspective: 1000px;
+	}
+
+#pages1{
+	top:8px;
+	width: 455px; 
+	height:605px;
+	}
+#pages2{
+	top:8px;	
+	left:455px;
+	width: 455px; 
+	height:605px;
+	}
+
+
+
+.flip-next {
+  	position: absolute;
+  	width: 100%;
+  	height: 100%;
+  	transition: transform 0.6s;
+  	transform-style: preserve-3d;
+ 	}
+.flip-next {
+	transform: rotateY(-180deg);
+	transform-origin: left center;
+	}
+
+.flip-back {
+  	position: absolute;
+  	width: 100%;
+  	height: 100%;
+  	transition: transform 0.6s;
+  	transform-style: preserve-3d;
+  	}
+.flip-back {
+  	transform: rotateY(0deg);
+  	transform-origin: left center;
+	}
+
+
+
+.fpage-front {
+ 
+  	background-image: -moz-linear-gradient(left, #ccc ,white 10%);
+   	background-image: -webkit-linear-gradient(left, #ccc ,white 10%);
+	}
+
+
+.fpage-back {
+ 
+  	left:470px;
+  	background-image: -moz-linear-gradient(right, #ccc ,white 10%);
+  	background-image: -webkit-linear-gradient(right, #ccc ,white 10%);
+  	transform: rotateY(180deg);
+  	transform-origin: left center;
+	}
+.fpage-front, .fpage-back {
+  	position: absolute;
+  	width: 100%;
+  	height: 100%;
+ 	backface-visibility: hidden;
+ 
+	}
+
+.page-back{
+	position: absolute;
+	background-image: -moz-linear-gradient(right, #ccc ,white 10%);
+	background-image: -webkit-linear-gradient(right, #ccc ,white 10%);
+	}
+
+.mobile-reader {
+	display: none;
+	color: #334155;
+}
+
+.mobile-reader-header {
+	margin-bottom: 12px;
+	text-align: center;
+}
+
+.mobile-reader-header h1 {
+	margin: 4px 0;
+	color: #3f6f68;
+	font-size: 22px;
+}
+
+.mobile-page-stage {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	overflow: hidden;
+	border: 1px solid #d5e5e8;
+	border-radius: 14px;
+	background: #fffdf6;
+	box-shadow: 0 5px 14px rgba(48, 86, 102, 0.13);
+}
+
+.mobile-page-viewport {
+	width: 100%;
+	max-width: 470px;
+	overflow: hidden;
+}
+
+.mobile-cover-page {
+	display: flex;
+	width: 470px;
+	height: 360px;
+	align-items: center;
+	justify-content: center;
+	transform-origin: top left;
+}
+
+.mobile-cover-page img {
+	max-width: 350px;
+	max-height: 330px;
+	object-fit: contain;
+}
+
+.mobile-page-frame {
+	display: block;
+	width: 470px;
+	height: 550px;
+	border: 0;
+	background: #fffdf6;
+	transform-origin: top left;
+}
+
+.mobile-book-controls {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 8px;
+	margin: 12px 0;
+}
+
+.mobile-book-controls button,
+.mobile-start-button,
+.mobile-contents button {
+	min-height: 44px;
+	padding: 8px 12px;
+	border: 1px solid #b9d8cf;
+	border-radius: 10px;
+	background: #e8f4ed;
+	box-shadow: 0 2px 4px rgba(53, 91, 77, 0.16);
+	color: #315b50;
+	font-size: 15px;
+	cursor: pointer;
+	touch-action: manipulation;
+}
+
+.mobile-book-controls button:disabled {
+	cursor: not-allowed;
+	opacity: 0.55;
+}
+
+.mobile-start-button {
+	width: 100%;
+	background: #fff1c7;
+	border-color: #e7c56e;
+}
+
+.mobile-cover-actions {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 8px;
+	margin-top: 12px;
+}
+
+.mobile-cover-actions button {
+	min-height: 44px;
+	padding: 8px 12px;
+	border: 1px solid #b9d8cf;
+	border-radius: 10px;
+	background: #e8f4ed;
+	color: #315b50;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+.mobile-contents {
+	margin-top: 12px;
+	padding: 12px;
+	border: 1px solid #d5e5e8;
+	border-radius: 12px;
+	background: #fff;
+	box-shadow: 0 3px 10px rgba(48, 86, 102, 0.1);
+}
+
+.mobile-contents h2 {
+	margin: 0 0 8px;
+	color: #3f6f68;
+	font-size: 18px;
+}
+
+.mobile-contents ol {
+	margin: 0;
+	padding-left: 28px;
+}
+
+.mobile-contents button {
+	width: 100%;
+	text-align: left;
+}
+
+.mobile-book-controls[hidden],
+.mobile-start-button[hidden],
+.mobile-cover-actions[hidden],
+.mobile-contents[hidden],
+.mobile-page-frame[hidden] {
+	display: none !important;
+}
+
+@media (max-width: 960px) {
+	body {
+		min-width: 0;
+		margin: 0;
+		overflow-x: hidden;
+		background: #eaf3f7;
+	}
+
+	body > center {
+		display: none;
+	}
+
+	.mobile-reader {
+		display: block;
+		box-sizing: border-box;
+		width: 100%;
+		max-width: 520px;
+		margin: 0 auto;
+		padding: 12px 12px 24px;
+	}
+}
